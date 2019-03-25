@@ -1,0 +1,282 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.animate-bottom {
+  position: relative;
+  animation: cusAniBottom 0.8s;
+}
+@keyframes cusAniBottom {
+  from {
+    bottom: -30px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+.customTradeLeft {
+  padding-left: 0px;
+  padding-right: 30px;
+}
+.customTradeRight {
+  padding-right: 0px;
+  padding-left: 30px;
+  border-left: 1px solid #cdcdcd;
+}
+.customTradeRight:before {
+  content: "OR";
+  position: absolute;
+  font-size: 0.9rem;
+  left: -0.7rem;
+  top: 30px;
+  background: white;
+}
+.imageInstruction {
+  width: 8em;
+  display: flex;
+}
+.tooltip-container {
+  display: inline-block;
+  margin-left: auto;
+}
+.tooltip-container svg {
+  position: static;
+  overflow: visible;
+  width: 1em;
+  font-size: 12px;
+  display: inline-block;
+  color: #2069af;
+  margin-left: 2px;
+  cursor: pointer;
+}
+span.tooltip.left {
+  top: -4px;
+  left: 12em !important;
+  background: #2069af;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  width: 300px;
+}
+span.tooltip {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: -32px;
+  width: auto;
+  padding: 4px;
+  left: 50%;
+  margin-left: -40px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 2;
+  font-size: 1.2rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.image-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  position: relative;
+}
+.image-input label {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+  border: 1px solid #aab4c1;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.image-input label .dropbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.image-input .beta-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+}
+.image-input .beta-badge:after {
+  background: #b2137d;
+  width: 100px;
+  height: 16px;
+  color: white;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.8rem;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  content: "beta";
+  top: 10px;
+  right: -33px;
+  position: absolute;
+  z-index: 999;
+}
+.image-input label .dropbox .image-input-icon {
+  color: #aab4c1;
+  font-size: 5rem;
+  position: relative;
+  right: auto;
+}
+svg:not(:root).svg-inline--fa {
+  overflow: visible;
+}
+.svg-inline--fa.fa-w-16 {
+  width: 1em;
+}
+.svg-inline--fa {
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+.image-input input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+@media (max-width: 991px) {
+  .customTradeLeft {
+    padding-bottom: 1em;
+  }
+  .customTradeRight {
+    padding-top: 1rem;
+    padding: 0px;
+    border-left: 0px;
+  }
+  .customTradeRight:before {
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    font-size: 1.2rem;
+  }
+  .tooltip-container {
+    display: none;
+  }
+  .imageInstruction {
+    padding-top: 2em;
+  }
+}
+.pageMenu {
+  height: 0%;
+  min-height: 0;
+  padding-bottom: 0;
+}
+.footer-section {
+  position: fixed;
+}
+#accordion {
+  width: 100%;
+}
+.form-check-input {
+  margin-top: 0.7rem;
+  margin-left: -0.3rem;
+}
+.btn-link {
+  color: black;
+}
+body {
+  min-height: 100vh;
+}
+.tabInfo {
+  padding-bottom: 40px;
+}
+.chatInfo {
+  display: none;
+  cursor: pointer;
+  background-color: #f2f4f6;
+  padding: 30px 60px 30px 60px;
+  position: relative;
+  border-radius: 5px;
+}
+.chatValue {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #984da0;
+  width: 45px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: white;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  box-shadow: 0 12px 43px rgba(116, 116, 116, 0.12);
+}
+.image-input label {
+  margin-bottom: 0;
+  width: 8rem;
+  height: 8rem;
+}
+.formStyle {
+  color: black;
+}
+.descriptionTextArea {
+  width: 100%;
+  border-radius: 5px;
+  border-color: lightgray;
+  padding: 5px 10px;
+  font-size: 18px;
+}
+#imageDetailImage {
+  max-width: 312px;
+  max-height: 100px;
+  margin: auto;
+}
+.imageDetailImageDiv {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  display: grid;
+}
+#descriptionDetail {
+  display: inherit;
+}
+#textImageDetail {
+  display: none;
+}
