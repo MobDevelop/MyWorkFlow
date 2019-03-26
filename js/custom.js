@@ -65,6 +65,10 @@ $(".tooltip-container svg").mouseout(function() {
 
 $("#imageDetailNext").click(function() {
   if ($("#imageDetailStep").val() == 1) {
+    if ($(".descriptionTextArea").val() == "") {
+      alert("You must type the image description");
+      return;
+    }
     $("#imageDetailBack").removeAttr("disabled");
     $("#descriptionDetail").css("display", "none");
     $("#textImageDetail").css("display", "inherit");
@@ -184,6 +188,48 @@ $("#inlineCheckbox2").click(function() {
     this.checked = true;
   }
 });
+
+function calcCosts() {
+  var goodBody = $("#selectedGoodsListBody")[0];
+  var serviceBody = $("#selectedServicesListBody")[0];
+  var total = 0;
+  if (goodBody.innerHTML.trim() != "No goods selected") {
+    total += goodBody.childNodes.length * 250;
+  }
+  if (serviceBody.innerHTML.trim() != "No services selected") {
+    total += serviceBody.childNodes.length * 250;
+  }
+  if (total == 0) {
+    $(".costParentDiv").css("display", "none");
+  } else {
+    $(".costSpan")[0].innerHTML = "$" + total;
+    $(".costParentDiv").css("display", "inherit");
+  }
+}
+
+function removePickListItem(spanItem) {
+  var ulItem = spanItem.parentNode.parentNode;
+  if (ulItem == null) return;
+  if (ulItem.childNodes.length == 1) {
+    var divItem = ulItem.parentNode;
+    var bodyItem = divItem.parentNode;
+    if (bodyItem == null) return;
+    if (bodyItem.childNodes.length == 1) {
+      typeText = bodyItem.parentNode.parentNode.childNodes[1].innerText;
+      if (typeText == "Selected goods")
+        bodyItem.innerHTML = "No goods selected";
+      else if (typeText == "Selected services")
+        bodyItem.innerHTML = "No services selected";
+      $("#selectTypeChatText p")[0].innerHTML =
+        "Please select at least one good or service to continue.To restrict your search to goods or services, use the filter options.";
+    } else {
+      bodyItem.removeChild(divItem);
+    }
+  } else {
+    ulItem.removeChild(spanItem.parentNode);
+  }
+  calcCosts();
+}
 function loadMoreEvent() {
   $(".loadMore").on("click", function(e) {
     e.preventDefault();
@@ -201,44 +247,171 @@ function loadMoreEvent() {
       1000
     );
   });
+  $(".pickListChildBody").on("click", function(e) {
+    var item = e.target;
+    var goodBody = $("#selectedGoodsListBody")[0];
+    var serviceBody = $("#selectedServicesListBody")[0];
+    var pickItemType = item.parentNode.childNodes[1].childNodes[1].textContent;
+    if (item.childNodes[1].innerHTML == "select")
+      item.childNodes[1].innerHTML = "✓";
+    else {
+      item.childNodes[1].innerHTML = "select";
+      itemText = item.childNodes[0];
+      var spanItem = $("[id='pickSpan" + itemText.textContent.trim() + "']")[0];
+      removePickListItem(spanItem);
+      return;
+    }
+    // If there is not class Div, then create one
+    if (
+      $(
+        "#pickListClassDiv" +
+          item.parentElement.childNodes[1].childNodes[0].innerHTML
+            .trim()
+            .split(" ")[1]
+      )[0] == undefined
+    ) {
+      var fdiv = document.createElement("div");
+      fdiv.id =
+        "pickListClassDiv" +
+        item.parentElement.childNodes[1].childNodes[0].innerHTML
+          .trim()
+          .split(" ")[1];
+      var h6 = document.createElement("h6");
+      h6.appendChild(
+        document.createTextNode(
+          item.parentElement.childNodes[1].childNodes[0].innerHTML.trim()
+        )
+      );
+      h6.classList.add("pickListh6Text");
+      fdiv.appendChild(h6);
+      if (pickItemType == "goods") {
+        if (goodBody.innerHTML.trim() == "No goods selected")
+          goodBody.innerHTML = "";
+        goodBody.appendChild(fdiv);
+      } else {
+        if (serviceBody.innerHTML.trim() == "No services selected")
+          serviceBody.innerHTML = "";
+        serviceBody.appendChild(fdiv);
+      }
+      $("#selectTypeChatText p")[0].innerHTML =
+        "Perform as many searches as you like. Once you have selected all appropriate goods and services, continue to the next step.";
+    }
+    // Find It's class Div and append the pickList item.
+    var pickListClassDiv = $(
+      "#pickListClassDiv" +
+        item.parentElement.childNodes[1].childNodes[0].innerHTML
+          .trim()
+          .split(" ")[1]
+    )[0];
+    // If there is no ul tag then create add
+    if (pickListClassDiv.getElementsByClassName("pickListGroup").length == 0) {
+      var itemListDiv = document.createElement("ul");
+      itemListDiv.classList.add("pickListGroup");
+      pickListClassDiv.appendChild(itemListDiv);
+    }
+    // Find ul tag and add li tag
+    var pickListGroup = pickListClassDiv.getElementsByClassName(
+      "pickListGroup"
+    )[0];
+    var pickListContainer = document.createElement("li");
+    pickListContainer.classList.add("pickListContainer");
+    var pickSpan = document.createElement("span");
+    pickSpan.classList.add("pickSpan");
+    var pickSpanText = document.createTextNode(item.childNodes[0].textContent);
+    pickSpan.appendChild(pickSpanText);
+    var pickRemoveSpan = document.createElement("span");
+    pickRemoveSpan.appendChild(document.createTextNode("x"));
+    pickRemoveSpan.classList.add("removeSpan");
+    pickSpan.appendChild(pickRemoveSpan);
+    pickSpan.classList.add("btn");
+    pickSpan.classList.add("btn-primary");
+    pickSpan.classList.add("btn-sm");
+    pickSpan.id = "pickSpan" + item.childNodes[0].textContent.trim();
+    pickListContainer.appendChild(pickSpan);
+    pickListGroup.append(pickListContainer);
+    calcCosts();
+    $(".removeSpan").on("click", function(e) {
+      var invalid = false;
+      var itemText = e.target.parentNode.childNodes[0].textContent;
+      $("#pickListBody")[0].childNodes.forEach(function(childHeader) {
+        if (invalid) return;
+        if (childHeader.nodeName != "#text") {
+          childHeader.childNodes.forEach(function(childBody) {
+            if (invalid) return;
+            if (childBody.nodeName != "#text") {
+              if (childBody.childNodes[0].textContent == itemText) {
+                invalid = true;
+                childBody.childNodes[1].textContent = "select";
+                removePickListItem(e.target.parentNode);
+                return;
+              }
+            }
+          });
+        }
+      });
+    });
+  });
 }
 function changeSearchInput() {
   $("#pickListDiv").css("display", "none");
-  fetch("./data/picklist.json")
-    .then(response => response.json())
-    .then(function(data) {
-      var list = data[0].picklist;
-      $("#pickListBody")[0].innerHTML = "";
-      list.forEach(function(each) {
-        if (!$("#pickListBody")[0].innerHTML.includes("Class " + each.class)) {
-          $("#pickListBody").append(
-            "<div id = 'pickListChildHeader" +
-              each.class +
-              "'> <div class = 'pickListChildHeader'><span> Class " +
-              each.class +
-              "</span><span class = 'pickListTypeSpan'>" +
-              (each.type == undefined ? "goods" : each.type) +
-              "</span></div> <div class = 'pickListChildBody'>" +
-              each.term +
-              "</div> </div>"
-          );
-        } else {
-          //console.log($("#pickListChildHeader" + each.class)[0]);
-          var x = document.createElement("div");
-          x.appendChild(document.createTextNode(each.term));
-          x.classList.add("pickListChildBody");
-          $("#pickListChildHeader" + each.class)[0].appendChild(x);
-        }
-      });
-      var x = document.createElement("a");
-      x.appendChild(document.createTextNode("Load More"));
-      x.classList.add("loadMore");
-      $("#pickListBody")[0].appendChild(x);
-      $("#pickListDiv").css("display", "inherit");
-      $("#pickListBody div")
-        .slice(0, 10)
-        .show();
+  if ($("#search-input").val().length != 0) {
+    fetch("./data/picklist.json")
+      .then(response => response.json())
+      .then(function(data) {
+        var list = data[0].picklist;
+        $("#pickListBody")[0].innerHTML = "";
+        list.forEach(function(each) {
+          if (
+            !$("#pickListBody")[0].innerHTML.includes("Class " + each.class)
+          ) {
+            $("#pickListBody").append(
+              "<div id = 'pickListChildHeader" +
+                each.class +
+                "'> <div class = 'pickListChildHeader'><span> Class " +
+                each.class +
+                "</span><span class = 'pickListTypeSpan'>" +
+                (each.type == undefined ? "goods" : each.type) +
+                "</span></div> <div class = 'pickListChildBody'>" +
+                each.term +
+                "<span class = 'pickListChildBodySelect btn btn-primary btn-sm'>select</span></div> </div>"
+            );
+          } else {
+            //console.log($("#pickListChildHeader" + each.class)[0]);
+            var x = document.createElement("div");
+            x.appendChild(document.createTextNode(each.term));
+            var child = document.createElement("span");
+            child.appendChild(document.createTextNode("select"));
+            child.classList.add("pickListChildBodySelect");
+            child.classList.add("btn");
+            child.classList.add("btn-primary");
+            child.classList.add("btn-sm");
+            x.classList.add("pickListChildBody");
+            x.appendChild(child);
+            $("#pickListChildHeader" + each.class)[0].appendChild(x);
+          }
+        });
+        var x = document.createElement("a");
+        x.appendChild(document.createTextNode("Load More"));
+        x.classList.add("loadMore");
+        $("#pickListBody")[0].appendChild(x);
+        $("#pickListDiv").css("display", "inherit");
+        $("#pickListBody div")
+          .slice(0, 10)
+          .show();
 
-      loadMoreEvent();
-    });
+        loadMoreEvent();
+        $("#selectTypeChatText p")[0].innerHTML =
+          "Please select at least one good or service to continue.To restrict your search to goods or services, use the filter options.";
+      });
+  } else {
+    $("#selectTypeChatText p")[0].innerHTML =
+      "Ok, let’s search for your goods and services. Enter a keyword and I'll display results as you type. You can conduct multiple searches, so please enter just one term at a time.";
+  }
 }
+$(window).scroll(function() {
+  if ($(this).scrollTop() > 50) {
+    $(".totop").fadeIn();
+  } else {
+    $(".totop").fadeOut();
+  }
+});

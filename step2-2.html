@@ -858,8 +858,14 @@
 										</div>
 									</div>
 								</div>
+								<div class = "costParentDiv">
+									<div class = "costDiv">
+										<div class = "costEstimateDiv">Estimated application cost</div>
+										<div class = "costSpan">$250</div>
+									</div>
+								</div>
 								<div class="row tabRow">
-									<div class = "col-lg-6">
+									<div class = "col col-lg-6">
 											<div class="input-with-search-icon">
 												<label for="gsTerm" class="sr-only">Search for your business goods and services</label> 
 												<input type="search" onblur = "changeSearchInput()" id="search-input" aria-labelledby="mainTitle" aria-describedby="bubbleDescription" placeholder="E.g. Driving instruction" class=""> 
@@ -893,6 +899,51 @@
 												</div>
 											</div>
 									</div>
+									<div class = "col col-lg-6">
+										<div class="ChatContent">
+												<div class="chatBotm animate-bottom">
+													<div class="row">
+														<div class="col-sm-8">
+															<div id ='selectTypeChatText' class="chatText">
+																<p>Ok, let’s search for your goods and services.
+
+																		Enter a keyword and I'll display results as you type. You can conduct multiple searches, so please enter just one term at a time.</p>
+															</div>
+														</div>
+														<div class="col-sm-4">
+															<div class="chatwrap">
+																<ul>
+																	<!-- <li><span class="contnueText">Let's Continue</span></li> -->
+																	<li><span class="chatImg"><img src="https://www.trademarkia.com/images/tm_registration/chatwoman.png"></span></li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+										</div>
+										<div>
+											<div id = "selectedGoodsDiv">
+												<div id = "pickListHeader">
+													Selected goods
+												</div>
+												<div id = "pickListBody">
+													<div id = "selectedGoodsListBody">
+														No goods selected
+													</div>
+												</div>
+											</div>
+											<div id = "selectedServicesDiv">
+												<div id = "pickListHeader">
+													Selected services
+												</div>
+												<div id = "pickListBody">
+													<div id = "selectedServicesListBody">
+														No services selected
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -923,6 +974,9 @@
 			</div>
 			</div>
 		</div>
+		<p class="totop"> 
+				<a href="#top">^</a> 
+		</p>
 		<script type="text/javascript" src="./js/jquery-latest.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.trademarkia.com/js/header_mm.js"></script> 

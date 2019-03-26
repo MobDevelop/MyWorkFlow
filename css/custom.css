@@ -207,6 +207,7 @@ svg:not(:root).svg-inline--fa {
 }
 .footer-section {
   position: fixed;
+  padding: 15px 0;
 }
 #accordion {
   width: 100%;
@@ -349,10 +350,10 @@ body {
   margin-left: 10px;
 }
 #pickListHeader {
-  min-height: 30px;
-  font-size: 13px;
+  min-height: 40px;
+  font-size: 14px;
   background-color: #fafafa;
-  padding: 5px;
+  padding: 10px;
   border-radius: 3px 3px 0 0;
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
@@ -436,4 +437,109 @@ body {
 .pickListTypeSpan {
   right: 30px;
   position: absolute;
+}
+.pickListChildBodySelect {
+  right: 10px;
+  position: absolute;
+  margin-top: -4px;
+}
+.chatImg {
+  margin-top: 0px;
+}
+.chatBotm {
+  margin-top: 0px;
+}
+#selectedGoodsListBody,
+#selectedServicesListBody {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
+  line-height: 1.4rem;
+  width: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+}
+#selectedGoodsDiv #pickListHeader {
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+#selectedServicesDiv {
+  margin-top: 10px;
+}
+
+.pickListGroup {
+  display: inline-block;
+  margin-left: 20px;
+  max-width: calc(100% - 90px);
+}
+.pickListContainer {
+  display: inline-block;
+  margin-left: 5px;
+  margin-bottom: 3px;
+}
+.pickListh6Text {
+  display: inline-block;
+  vertical-align: top;
+  width: 70px;
+}
+.removeSpan {
+  cursor: pointer;
+  padding: 0 0px 0 10px;
+  opacity: 0.8;
+  font-size: 0.7rem;
+  vertical-align: top;
+  display: inline-block;
+}
+.totop {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: #007bff;
+  border-radius: 5px;
+  display: none;
+  padding: 15px 20px;
+}
+.totop a {
+  color: #fff;
+  font-size: 20px;
+}
+.costDiv {
+  background-color: #44495d;
+  color: white;
+  border-radius: 3px;
+  max-width: 210px;
+  padding: 10px;
+  position: relative;
+  height: 70px;
+  margin-left: auto;
+  margin-top: 5px;
+}
+.costEstimateDiv {
+  font-size: 16px;
+}
+.costSpan {
+  position: absolute;
+  right: 10px;
+  font-size: 20px;
+}
+.costParentDiv {
+  position: sticky;
+  margin-left: auto;
+  top: 50px;
+  z-index: 999;
+  display: none;
+}
+.wrapper-box {
+  position: relative;
 }
