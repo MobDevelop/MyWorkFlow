@@ -25,7 +25,7 @@
       type="image/x-icon"
     />
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
-    <link href="./css/font-awesome.min.css" rel="stylesheet" />
+		<link href="./css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://www.trademarkia.com/css/tm_header.css" rel="stylesheet" />
 		<link href="https://www.trademarkia.com/css/tm_workflow.css" rel="stylesheet" />
 		<link href="https://www.trademarkia.com/css/style.css" rel="stylesheet" />
@@ -493,7 +493,7 @@
 						<div class="process-row">
 						 <div class="process-step">
 							<div class="tabsLink tabpannel">
-								<a href="step1.aspx">
+								<a href="step1-1.html">
 									<span class="tabIcon">
 										<svg version="1.1" id="Capa_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px"
 											 viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
@@ -549,7 +549,7 @@
 						 </div>
 						 <div class="process-step">
 							<div class="tabsLink active">
-								<a href="step2.aspx">
+								<a href="step2-1.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 										<g>
@@ -569,7 +569,7 @@
 						 </div>
 						 <div class="process-step">
 							<div class="tabsLink tabpannel">
-								<a href="step3.aspx">
+								<a href="step3.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 										<g>
@@ -605,7 +605,7 @@
 						 </div>
 						 <div class="process-step">
 							<div class="tabsLink tabpannel">
-								<a href="javascript:void(0)">
+								<a href="step4.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 										<g>
@@ -656,7 +656,7 @@
 						 </div>
 						 <div class="process-step">
 							<div class="tabsLink tabpannel">
-								<a href="javascript:void(0)">
+								<a href="step5.html">
 									<span class="tabIcon">
 										<svg version="1.1" id="Capa_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px"
 											 viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
@@ -721,7 +721,7 @@
 						 </div>
 						 <div class="process-step">
 							<div class="tabsLink tabpannel">
-								<a href="javascript:void(0)">
+								<a href="step6.html">
 									<span class="tabIcon">
 										<svg version="1.1" id="Layer_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px"
 											 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -852,7 +852,7 @@
 														<a onClick="goBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
 													</li>
 												<li>
-													<a href="step1-2.html" class="btn btnstep">Continue</a>
+													<a href="step3.html" id = "step22continueBtn" class="btn btnstep disabled">Continue</a>
 												</li>
 											</ul>
 										</div>
@@ -873,7 +873,7 @@
 												<span class="search-icon"><svg aria-hidden="true" data-prefix="far" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" class="svg-inline--fa fa-search fa-w-16"><path fill="currentColor" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z" class=""></path></svg></span>
 											</div>
 											<div class = "browse-picklist-items">
-												<a href="1.html" class = "btn btn-primary">
+												<a href="#" onClick = "browsePickList()" class = "btn btn-primary">
 													Browse the picklist terms >>
 												</a>
 											</div>
@@ -974,6 +974,37 @@
 			</div>
 			</div>
 		</div>
+		
+		<div class="modal fade" id="browsePickListDiv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="imageDetailDialogLongTitle">Picklist items selection</h5>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+					<div class="modal-body">
+						<div class = "browsePickListDescription">
+							You can search the entire picklist here for "exact matches" or explore by class. Results will be displayed as you type.
+						</div>
+						<div class = "browserPickListSettings row">
+							<div class="col-12 col-lg-3">
+								<select id="browserPickListSelect" class="form-control">
+									<option selected id = '0'>All Classes...</option>
+								</select>
+							</div>
+							<div class = "browserPickListInputDiv col-12 col-lg-9">
+								<input type = "text" id = "browserPickListInput" />
+								<span class="search-icon"><svg aria-hidden="true" data-prefix="far" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" class="svg-inline--fa fa-search fa-w-16"><path fill="currentColor" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z" class=""></path></svg></span>
+							</div>
+						</div>
+						<div id = "browserPickListTableDiv">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<p class="totop"> 
 				<a href="#top">^</a> 
 		</p>

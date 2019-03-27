@@ -103,6 +103,9 @@ $("#imageDetailNext").click(function() {
     $("#imageDetailStep").val(3);
   } else if ($("#imageDetailStep").val() == 3) {
     alert("done");
+    if ($("#step12continueBtn")[0].classList[2] == "disabled") {
+      $("#step12continueBtn")[0].classList.remove("disabled");
+    }
     $("#imageDetailDialog").modal("hide");
   }
 });
@@ -156,6 +159,12 @@ function trademarkBlur() {
     $(".chatText p").text(
       "Let's begin! Please enter your proposed trade mark or select an image. I’ll check for words and phrases that may be difficult to register. Note: a common mistake is being too generic or descriptive."
     );
+    if (
+      $("#step12continueBtn")[0].classList[2] != "undefined" &&
+      $("#step12continueBtn")[0].classList[2] != "disabled"
+    ) {
+      $("#step12continueBtn")[0].classList.add("disabled");
+    }
   } else {
     $("#trademarkNameInput").text($("#trademarkInput").val());
     $("#chatValue").text("1");
@@ -163,6 +172,9 @@ function trademarkBlur() {
     $(".chatText p").text(
       "Ok, the next step is to identify your goods and services. Let’s continue."
     );
+    if ($("#step12continueBtn")[0].classList[2] == "disabled") {
+      $("#step12continueBtn")[0].classList.remove("disabled");
+    }
   }
 }
 $("#chatInfo").click(function() {
@@ -194,16 +206,25 @@ function calcCosts() {
   var serviceBody = $("#selectedServicesListBody")[0];
   var total = 0;
   if (goodBody.innerHTML.trim() != "No goods selected") {
-    total += goodBody.childNodes.length * 250;
+    total += goodBody.childNodes.length * 474;
   }
   if (serviceBody.innerHTML.trim() != "No services selected") {
-    total += serviceBody.childNodes.length * 250;
+    total += serviceBody.childNodes.length * 474;
   }
   if (total == 0) {
     $(".costParentDiv").css("display", "none");
+    if (
+      $("#step22continueBtn")[0].classList[2] != "undefined" &&
+      $("#step22continueBtn")[0].classList[2] != "disabled"
+    ) {
+      $("#step22continueBtn")[0].classList.add("disabled");
+    }
   } else {
     $(".costSpan")[0].innerHTML = "$" + total;
     $(".costParentDiv").css("display", "inherit");
+    if ($("#step22continueBtn")[0].classList[2] == "disabled") {
+      $("#step22continueBtn")[0].classList.remove("disabled");
+    }
   }
 }
 
@@ -230,7 +251,32 @@ function removePickListItem(spanItem) {
   }
   calcCosts();
 }
-function loadMoreEvent() {
+
+function changeSelectedStatusInPickListBody(
+  itemText,
+  selectedText,
+  removeStatus
+) {
+  var invalid = false;
+  $("#pickListBody")[0].childNodes.forEach(function(childHeader) {
+    if (invalid) return;
+    if (childHeader.nodeName != "#text") {
+      childHeader.childNodes.forEach(function(childBody) {
+        if (invalid) return;
+        if (childBody.nodeName != "#text") {
+          if (childBody.childNodes[0].textContent == itemText.textContent) {
+            invalid = true;
+            childBody.childNodes[1].textContent = selectedText;
+            if (removeStatus == 0) removePickListItem(itemText.parentNode);
+            return;
+          }
+        }
+      });
+    }
+  });
+}
+
+function loadMoreEvent(pickListId) {
   $(".loadMore").on("click", function(e) {
     e.preventDefault();
     $("#pickListBody div:hidden")
@@ -247,20 +293,23 @@ function loadMoreEvent() {
       1000
     );
   });
-  $(".pickListChildBody").on("click", function(e) {
+  $(pickListId).on("click", function(e) {
     var item = e.target;
     var goodBody = $("#selectedGoodsListBody")[0];
     var serviceBody = $("#selectedServicesListBody")[0];
     var pickItemType = item.parentNode.childNodes[1].childNodes[1].textContent;
-    if (item.childNodes[1].innerHTML == "select")
+    if (item.childNodes[1].innerHTML == "select") {
       item.childNodes[1].innerHTML = "✓";
-    else {
+      changeSelectedStatusInPickListBody(item.childNodes[0], "✓", 1);
+    } else {
       item.childNodes[1].innerHTML = "select";
       itemText = item.childNodes[0];
+      changeSelectedStatusInPickListBody(itemText, "select", 1);
       var spanItem = $("[id='pickSpan" + itemText.textContent.trim() + "']")[0];
       removePickListItem(spanItem);
       return;
     }
+
     // If there is not class Div, then create one
     if (
       $(
@@ -331,24 +380,8 @@ function loadMoreEvent() {
     pickListGroup.append(pickListContainer);
     calcCosts();
     $(".removeSpan").on("click", function(e) {
-      var invalid = false;
-      var itemText = e.target.parentNode.childNodes[0].textContent;
-      $("#pickListBody")[0].childNodes.forEach(function(childHeader) {
-        if (invalid) return;
-        if (childHeader.nodeName != "#text") {
-          childHeader.childNodes.forEach(function(childBody) {
-            if (invalid) return;
-            if (childBody.nodeName != "#text") {
-              if (childBody.childNodes[0].textContent == itemText) {
-                invalid = true;
-                childBody.childNodes[1].textContent = "select";
-                removePickListItem(e.target.parentNode);
-                return;
-              }
-            }
-          });
-        }
-      });
+      var itemText = e.target.parentNode.childNodes[0];
+      changeSelectedStatusInPickListBody(itemText, "select", 0);
     });
   });
 }
@@ -358,7 +391,7 @@ function changeSearchInput() {
     fetch("./data/picklist.json")
       .then(response => response.json())
       .then(function(data) {
-        var list = data[0].picklist;
+        var list = data.picklist;
         $("#pickListBody")[0].innerHTML = "";
         list.forEach(function(each) {
           if (
@@ -399,7 +432,7 @@ function changeSearchInput() {
           .slice(0, 10)
           .show();
 
-        loadMoreEvent();
+        loadMoreEvent(".pickListChildBody");
         $("#selectTypeChatText p")[0].innerHTML =
           "Please select at least one good or service to continue.To restrict your search to goods or services, use the filter options.";
       });
@@ -407,6 +440,82 @@ function changeSearchInput() {
     $("#selectTypeChatText p")[0].innerHTML =
       "Ok, let’s search for your goods and services. Enter a keyword and I'll display results as you type. You can conduct multiple searches, so please enter just one term at a time.";
   }
+}
+
+function loadPickListTerms() {
+  fetch("./data/picklist.json")
+    .then(response => response.json())
+    .then(function(data) {
+      var id = $("#browserPickListSelect")
+        .find("option:selected")
+        .attr("id");
+      var picklistArray = [];
+      data.picklist.forEach(function(each) {
+        if (each.class == id) {
+          picklistArray.push(each);
+        }
+      });
+      $("#browserPickListTableDiv")[0].innerHTML = "";
+      picklistArray.forEach(function(each) {
+        if (
+          !$("#browserPickListTableDiv")[0].innerHTML.includes(
+            "Class " + each.class
+          )
+        ) {
+          var spanItem = $("[id='pickSpan" + each.term.trim() + "']")[0];
+          var selectItemText = spanItem == undefined ? "select" : "✓";
+          $("#browserPickListTableDiv").append(
+            "<div id = 'browserPickListChildHeader" +
+              each.class +
+              "'> <div class = 'browserPickListChildHeader'><span> Class " +
+              each.class +
+              "</span><span class = 'browserPickListTypeSpan'>" +
+              (each.type == undefined ? "goods" : each.type) +
+              "</span></div> <div class = 'browserPickListChildBody'>" +
+              each.term +
+              "<span class = 'browserPickListChildBodySelect btn btn-primary btn-sm'>" +
+              selectItemText +
+              "</span></div> </div>"
+          );
+        } else {
+          //console.log($("#pickListChildHeader" + each.class)[0]);
+          var spanItem = $("[id='pickSpan" + each.term.trim() + "']")[0];
+          var selectItemText = spanItem == undefined ? "select" : "✓";
+          var x = document.createElement("div");
+          x.appendChild(document.createTextNode(each.term));
+          var child = document.createElement("span");
+          child.appendChild(document.createTextNode(selectItemText));
+          child.classList.add("browserPickListChildBodySelect");
+          child.classList.add("btn");
+          child.classList.add("btn-primary");
+          child.classList.add("btn-sm");
+          x.classList.add("browserPickListChildBody");
+          x.appendChild(child);
+          $("#browserPickListChildHeader" + each.class)[0].appendChild(x);
+        }
+      });
+      $("#browserPickListTableDiv div")
+        .slice(0, 10)
+        .show();
+      loadMoreEvent(".browserPickListChildBody");
+      $("#browserPickListSelect").css("display", "inherit");
+    });
+}
+function browsePickList() {
+  $("#browsePickListDiv").modal("show");
+  $("#browserPickListSelect")
+    .empty()
+    .append('<option selected="selected" id="0">All Classes...</option>');
+  for (var i = 1; i <= 45; i++) {
+    var option = document.createElement("option");
+    option.id = i;
+    option.appendChild(document.createTextNode("Class" + i));
+    $("#browserPickListSelect")[0].appendChild(option);
+  }
+  $("#browserPickListTableDiv")[0].innerHTML = "";
+  $("#browserPickListSelect").on("change", function(e) {
+    loadPickListTerms();
+  });
 }
 $(window).scroll(function() {
   if ($(this).scrollTop() > 50) {

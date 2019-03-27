@@ -364,7 +364,8 @@ body {
 #pickList {
   margin-top: 15px;
 }
-.pickListChildHeader {
+.pickListChildHeader,
+.browserPickListChildHeader {
   display: none;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -377,7 +378,8 @@ body {
   background-color: #ebe9e9;
   font-size: 15px;
 }
-.pickListChildBody {
+.pickListChildBody,
+.browserPickListChildBody {
   display: none;
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -434,11 +436,13 @@ body {
   background-color: #fff;
   color: #33739e;
 }
-.pickListTypeSpan {
+.pickListTypeSpan,
+.browserPickListTypeSpan {
   right: 30px;
   position: absolute;
 }
-.pickListChildBodySelect {
+.pickListChildBodySelect,
+.browserPickListChildBodySelect {
   right: 10px;
   position: absolute;
   margin-top: -4px;
@@ -542,4 +546,97 @@ body {
 }
 .wrapper-box {
   position: relative;
+}
+.card-body {
+  font-size: 13px;
+}
+.search-box {
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  height: 130px;
+}
+.search-input-container {
+  background-color: white;
+  width: 75%;
+  display: inline-block;
+  height: 50px;
+  border-radius: 3px;
+  border: 1px solid lightgray;
+  position: relative;
+}
+.search-input-results {
+  margin-left: 2%;
+  width: 20%;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  position: relative;
+}
+#search-input-count {
+  position: absolute;
+  font-size: 15px;
+  font-weight: bold;
+  left: 50%;
+}
+.search-result-button {
+  position: absolute;
+  right: 30px;
+  margin-top: 10px;
+}
+.search-input-container .search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: #0b77ca;
+}
+.myTradeMarkName {
+  margin: 5px;
+  border-radius: 30px;
+}
+#browsePickListDiv div {
+  max-width: 800px;
+}
+.browsePickListDescription {
+  font-size: 14px;
+}
+#browsePickListDiv .modal-header,
+#browsePickListDiv .modal-body {
+  padding: 2rem 2rem;
+}
+#browserPickListSelect {
+  margin: 10px 0px !important;
+}
+#browserPickListInput {
+  margin: 10px 0px;
+  height: 40px;
+  width: 100%;
+  font-size: 20px;
+  padding: 5px;
+}
+.browserPickListInputDiv .search-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.4rem;
+  color: #0b77ca;
+}
+#browserPickListTableDiv {
+  background: #fffdfd;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  -webkit-animation: moveup-margin 0.3s ease-in-out;
+  animation: moveup-margin 0.3s ease-in-out;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+#browserPickListTableDiv .browserPickListTypeSpan {
+  right: 40px;
+}
+#browserPickListTableDiv .browserPickListChildBodySelect {
+  right: 40px;
 }
