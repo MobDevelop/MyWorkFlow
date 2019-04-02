@@ -28,6 +28,7 @@
     <link href="./css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://www.trademarkia.com/css/tm_header.css" rel="stylesheet" />
 		<link href="https://www.trademarkia.com/css/tm_workflow.css" rel="stylesheet" />
+		<link rel="stylesheet" href="./css/countrySelect.css" />
 		<link href="https://www.trademarkia.com/css/style.css" rel="stylesheet" />
     <link href="./css/custom.css" rel="stylesheet" />
   </head>
@@ -492,7 +493,7 @@
 					<div class="col-md-3">
 						<div class="process-row">
 						 <div class="process-step">
-							<div class="tabsLink active">
+							<div class="tabsLink tabpannel">
 								<a href="step1-1.html">
 									<span class="tabIcon">
 										<svg version="1.1" id="Capa_1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -604,7 +605,7 @@
 							</div>
 						 </div>
 						 <div class="process-step">
-							<div class="tabsLink tabpannel">
+							<div class="tabsLink active">
 								<a href="step4.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -833,7 +834,7 @@
 									</div>
 									<div class="col-xs-4 col-sm-5 text-right">
 										<div class="step-item">
-											Step 1 of 6
+											Step 4 of 6
 										</div>
 									</div>
 								</div>
@@ -842,12 +843,15 @@
 								<div class="row">
 									<div class="col-sm-7">
 										<div class="sub-heading">
-                                            Select your trademark type
+												Check your ownership details(Optional)
 										</div>
 									</div>
 									<div class="col-sm-5 text-right hidden-xs">
 										<div class="button-right-aside">
 											<ul>
+												<li>
+														<a onClick="goBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
+													</li>
 												<li>
 													<a href="step1-2.html" class="btn btnstep">Continue</a>
 												</li>
@@ -857,39 +861,58 @@
 								</div>
 								<div class="row tabRow">
 									<div class = "col col-lg-7">
-									<div id="accordion">
-										<div class="card">
-											<div class="card-header" id="headingOne">
-												<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-												<h5 class="mb-0">
-													<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-														Text
-													</button>
-												</h5>
+											<div class = "instructionButtons">
+													<span>I am applying as: </span>
+													<button id = "indivButton" class = "btn btn-primary">An individual</button>
+													<button id = "companyButton" class = "btn btn-outline-primary">A company</button>
 											</div>
-									
-											<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-												<div class="card-body">
-													The trademark type is text. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. 
+											<div class = "individualForm">
+												<div class = "indivApplicant">
+													<div>
+														Applicant name
+													</div>
+													<div class = "row">
+														<div class = "col-lg-4">
+															<input placeholder="Title" class = "individualTitle"/>
+														</div>
+														<div class = "col-lg-4">
+															<input placeholder="First name" class = "individualFName"/>
+														</div>
+														<div class = "col-lg-4">
+															<input placeholder="Last Name" class = "individualLName"/>
+														</div>
+													</div>
+												</div>
+												<div class = "indivPostal">
+													<div>
+														Postal Address
+													</div>
+													<div class = "indivCountrySelect">
+														<input id="country_selector" type="text" />
+													</div>
+													<div class = "indivAddress">
+														<input placeholder="Address" id = "indivAddressInput" />
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="card">
-											<div class="card-header" id="headingTwo">
-												<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-												<h5 class="mb-0">
-													<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-														Image
-													</button>
-												</h5>
-											</div>
-											<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-												<div class="card-body">
-														The trademark type is Image. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. 
+											<div class = "companyForm hide">
+												<div class = "inputLabelForm">
+														<Label>Applicant country</Label>
+														<input id="country_selector1" type="text" />
+												</div>
+												<div class = "inputLabelForm">
+														<Label>ABN, ACN or ARBN</Label>
+														<input id="companyABNInput" type="text" />
+												</div>
+												<div class = "inputLabelForm">
+														<Label>Company name</Label>
+														<input id="companyNameInput" type="text" />
+												</div>
+												<div class = "inputLabelForm">
+														<Label>Postal Address</Label>
+														<input id="postalAddressInput" type="text" placeholder="Address"/>
 												</div>
 											</div>
-										</div>
-									</div>
 									</div>
 									<div class = "col col-lg-5">
 											<div class = "costParentDiv">
@@ -902,8 +925,10 @@
 												<div class="chatBotm animate-bottom">
 													<div class="row">
 														<div class="col-sm-8">
-															<div class="chatText">
-																<p>Let's begin! <br> Please select your trademark type</p>
+															<div id ='selectTypeChatText' class="chatText">
+																<p>Enter your ownership details to check for issues you may encounter when applying. To skip this step, please click Continue.
+
+																	Note: This tool does not currently support more than one owner.<br/><a href = "https://www.trademarkia.com/trademark_statement/">Privacy Collection Statement</a></p>
 															</div>
 														</div>
 														<div class="col-sm-4">
@@ -916,8 +941,7 @@
 														</div>
 													</div>
 												</div>
-											</div>
-									</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -949,10 +973,28 @@
 			</div>
 			</div>
 		</div>
+		<p class="totop"> 
+				<a href="#top">^</a> 
+		</p>
 		<script type="text/javascript" src="./js/jquery-latest.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.trademarkia.com/js/header_mm.js"></script> 
 		<script type="text/javascript" src="https://www.trademarkia.com/js/general.js"></script>
+		<script src="./js/countrySelect.js"></script>
+		<script>
+				$("#country_selector").countrySelect({
+					 defaultCountry: "us",
+					// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+					// responsiveDropdown: true,
+					preferredCountries: []
+				});
+				$("#country_selector1").countrySelect({
+					 defaultCountry: "us",
+					// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+					// responsiveDropdown: true,
+					preferredCountries: []
+				});
+			</script>
 		<script type="text/javascript" src="./js/custom.js"></script>
 	</body>
 </html>

@@ -862,8 +862,14 @@
 									<div class="col-xl-7 col-lg-8">
 										<div class="row">
 											<div class="inputContent col-md-8 customTradeLeft">
-												<div class="form-group">
-													<input type="text" id = "trademarkInput" onblur="trademarkBlur()" class="form-control formStyle" placeholder="E. g. Coca Cola">
+												<div class="form-group row trademarkInputForm">
+													<div class = "col-md-9">
+														<input type="text" id = "trademarkInput" class="form-control formStyle" placeholder="E. g. Coca Cola">
+														<span id = "trademarkInputSpinner" class="loading form-control-feedback"></span>
+													</div>
+													<div class = "col-md-3">
+														<button class = "btn btn-primary goBtn" onClick = "trademarkBlur()">Go</button>
+													</div>
 												</div>
 												<span class="inputInfo">Please type the characters of your trademark exactly how you are using or plan to use it.</span>
 											</div>
@@ -893,6 +899,12 @@
 										</div>
 									</div>
 									<div class="col-xl-5 col-lg-4">
+											<div class = "costParentDiv">
+													<div class = "costDiv">
+														<div class = "costEstimateDiv">Estimated application cost</div>
+														<div class = "costSpan">$250</div>
+													</div>
+												</div>
 										<div class="ChatContent">
 											<div class="chatInfo animate-bottom" id = "chatInfo">
 												<div class="chatValue" id = "chatValue">123</div>
@@ -988,7 +1000,23 @@
 		<script type="text/javascript" src="./js/custom.js"></script>
 		<script type="text/javascript" src="./js/tagsinput.js"></script>
 		<script src='https://cdn.jsdelivr.net/gh/naptha/tesseract.js@v1.0.14/dist/tesseract.min.js'></script>
-
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+		<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+		<script>
+			window.addEventListener("load", function(){
+			window.cookieconsent.initialise({
+				"palette": {
+					"popup": {
+						"background": "#000"
+					},
+					"button": {
+						"background": "transparent",
+						"text": "#f1d600",
+						"border": "#f1d600"
+					}
+				}
+			})});
+		</script>
 	</body>
 </html>
 			  
