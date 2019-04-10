@@ -737,13 +737,15 @@ body {
 .instructionButtons span {
   font-size: 16px;
 }
-.instructionButtons button {
+.instructionButtons a {
   margin-left: 15px;
 }
-.individualForm div {
+.individualForm div,
+.companyForm div {
   font-size: 16px;
 }
-.individualForm {
+.individualForm,
+.companyForm {
   margin-top: 20px;
 }
 .indivApplicant .row {
@@ -798,4 +800,66 @@ body {
 #country_selector1 {
   width: 100%;
   height: 40px;
+}
+#savePDF svg {
+  width: 15px;
+}
+.savePDFDiv {
+  text-align: right;
+}
+#trademarkNameDivBody {
+  padding: 10px;
+  font-size: 20px;
+}
+#selectedAllDiv {
+  margin-top: 15px;
+}
+#selectedAllListBody {
+  padding: 10px;
+}
+.questionImage {
+  width: 25px;
+  height: auto;
+}
+.questionTitle {
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 16px;
+}
+.pickListClassName {
+  display: none;
+}
+.questionText {
+  padding: 10px 0px 10px 25px;
+  font-size: 16px;
+}
+.redMul {
+  color: red;
+  font-size: 18px;
+}
+.questionsDiv {
+  padding: 0px 0px 10px 25px;
+}
+.mainQuestionBody textarea {
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+}
+.mainQuestionBody {
+  margin-top: 10px;
+}
+.otherQuestion {
+  display: none;
+}
+.mainQuestionTitle,
+.datepickerHeader {
+  font-size: 14px;
+}
+.text-align-right {
+  text-align: right;
+}
+select.form-control {
+  margin: 0;
 }

@@ -25,7 +25,7 @@
       type="image/x-icon"
     />
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
-		<link href="./css/font-awesome.min.css" rel="stylesheet" />
+    <link href="./css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://www.trademarkia.com/css/tm_header.css" rel="stylesheet" />
 		<link href="https://www.trademarkia.com/css/tm_workflow.css" rel="stylesheet" />
 		<link href="https://www.trademarkia.com/css/style.css" rel="stylesheet" />
@@ -548,7 +548,7 @@
 							</div>
 						 </div>
 						 <div class="process-step">
-							<div class="tabsLink active">
+							<div class="tabsLink tabpannel">
 								<a href="step2-1.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -568,7 +568,7 @@
 							</div>
 						 </div>
 						 <div class="process-step">
-							<div class="tabsLink tabpannel">
+							<div class="tabsLink active">
 								<a href="step3-1.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -828,12 +828,12 @@
 													</g>
 												</svg>
 											</span>
-											<span class="title">Goods & Services</span>
+											<span class="title">Search</span>
 										</div>
 									</div>
 									<div class="col-xs-4 col-sm-5 text-right">
 										<div class="step-item">
-											Step 2 of 6 (Continued)
+											Step 3 of 6
 										</div>
 									</div>
 								</div>
@@ -842,7 +842,7 @@
 								<div class="row">
 									<div class="col-sm-7">
 										<div class="sub-heading">
-												Search for your business goods and services
+												Search for existing trade marks that may be a problem
 										</div>
 									</div>
 									<div class="col-sm-5 text-right hidden-xs">
@@ -852,55 +852,34 @@
 														<a onClick="goBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
 													</li>
 												<li>
-													<a href="step3-1.html" id = "step22continueBtn" class="btn btnstep disabled">Continue</a>
+													<a href="step3-2.html" class="btn btnstep">Continue</a>
 												</li>
 											</ul>
 										</div>
 									</div>
 								</div>
-								
 								<div class="row tabRow">
-									<div class = "col-lg-6">
-											<div class = "row">
-												<div class="input-with-search-icon col-md-9">
-													<label for="gsTerm" class="sr-only">Search for your business goods and services</label> 
-													<input type="search" id="search-input" onblur = "changeSearchInput()" aria-labelledby="mainTitle" aria-describedby="bubbleDescription" placeholder="E.g. Driving instruction" class=""> 
-													<div class="text-box-status"><!----></div> 
-													<span class="search-icon"><svg aria-hidden="true" data-prefix="far" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" class="svg-inline--fa fa-search fa-w-16"><path fill="currentColor" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z" class=""></path></svg></span>
-													<span id = "searchInputSpinner" class="loading form-control-feedback"></span>
-												</div>
-												<div class = "col-md-3">
-														<button class = "btn btn-primary goBtn" onClick = "changeSearchInput()">Go</button>
-												</div>
-											</div>
-											<div class = "browse-picklist-items">
-												<a href="#" onClick = "browsePickList()" class = "btn btn-primary">
-													Browse the picklist terms >>
-												</a>
-											</div>
-											<div id = "pickListDiv" class ='animate-bottom' style = 'display:none;'>
-												<div class = "show-good-service-checkbox">
-														Show:
-														<div class="form-check form-check-inline">
-																<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
-																<label class="form-check-label" for="inlineCheckbox1">Goods</label>
-															</div>
-															<div class="form-check form-check-inline">
-																<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" checked>
-																<label class="form-check-label" for="inlineCheckbox2">Services</label>
-															</div>
-												</div>
-												<div id = "pickList">
-													<div id = "pickListHeader">
-														Top Recommended goods and services based on <span id = "pickListItem"></span>
-													</div>	
-													<div id = "pickListBody" >
+									<div class = "col col-lg-7">
+											<div class = "search-box">
+												<div class = "search-query">
+													<div class = "search-input-div">
+														<div class = "search-input-container">
+																<span class = "btn btn-primary myTradeMarkName">trade mark</span>
+																<span class="search-icon"><svg aria-hidden="true" data-prefix="far" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" class="svg-inline--fa fa-search fa-w-16"><path fill="currentColor" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z" class=""></path></svg></span>		
+														</div>
 														
+														<div class = "search-input-results">
+															<div>Search results</div>
+															<div id = "search-input-count">5</div>
+														</div>
+													</div>
+													<div class = "search-result-div">
+														<div class = "btn btn-primary search-result-button">View results</div>
 													</div>
 												</div>
 											</div>
 									</div>
-									<div class = "col-lg-6">
+									<div class = "col col-lg-5">
 											<div class = "costParentDiv">
 													<div class = "costDiv">
 														<div class = "costEstimateDiv">Estimated application cost</div>
@@ -912,9 +891,8 @@
 													<div class="row">
 														<div class="col-sm-8">
 															<div id ='selectTypeChatText' class="chatText">
-																<p>Ok, let’s search for your goods and services.
-
-																		Enter a keyword and I'll display results as you type. You can conduct multiple searches, so please enter just one term at a time.</p>
+																<p>OK, let’s make sure your trade mark isn’t already in use.
+																		To do this we’ll need to search the trade mark register to see if a similar trade mark exists.</p>
 															</div>
 														</div>
 														<div class="col-sm-4">
@@ -929,26 +907,27 @@
 												</div>
 										</div>
 										<div>
-											<div id = "selectedGoodsDiv">
-												<div id = "pickListHeader">
-													Selected goods
-												</div>
-												<div id = "pickListBody">
-													<div id = "selectedGoodsListBody">
-														No goods selected
+												<div id="accordion1">
+														<div class="card">
+															<div class="card-header" id="headingOne">
+																<h5 class="mb-0">
+																	<button class="btn btn-link" data-toggle="collapse" data-target="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+																			Where can I get futher help?
+																	</button>
+																</h5>
+															</div>
+													
+															<div id="collapseZero" class="collapse" aria-labelledby="headingOne" data-parent="#accordion1">
+																<div class="card-body">
+																		<div tabindex="0">
+																				<p>
+																						Consider applying using IP Australia’s <a href="https://www.ipaustralia.gov.au/trade-marks/applying-for-a-trade-mark/how-to-apply-for-a-trade-mark/tm-headstart" target="_blank">TM Headstart service</a> to get early feedback on your proposed trade mark or seek IP <a href="https://www.ipaustralia.gov.au/about-us/doing-business-us/ip-professionals-and-other-sites" target="_blank">legal advice</a>.
+																				</p>
+																			</div>
+																</div>
+															</div>
+														</div>
 													</div>
-												</div>
-											</div>
-											<div id = "selectedServicesDiv">
-												<div id = "pickListHeader">
-													Selected services
-												</div>
-												<div id = "pickListBody">
-													<div id = "selectedServicesListBody">
-														No services selected
-													</div>
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -981,50 +960,6 @@
 			</div>
 			</div>
 		</div>
-		
-		<div class="modal fade" id="browsePickListDiv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="imageDetailDialogLongTitle">Picklist items selection</h5>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					</div>
-					<div class="modal-body">
-						<div class = "browsePickListDescription">
-							You can search the entire picklist here for "exact matches" or explore by class. Results will be displayed as you type.
-						</div>
-						<div class = "browserPickListSettings row">
-							<div class="col-12 col-lg-3">
-								<select id="browserPickListSelect" class="form-control">
-									<option selected id = '0'>All Classes...</option>
-								</select>
-							</div>
-							<div class = "browserPickListInputDiv col-12 col-lg-9">
-								<input type = "text" id = "browserPickListInput" />
-								<span class="search-icon"><svg aria-hidden="true" data-prefix="far" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" class="svg-inline--fa fa-search fa-w-16"><path fill="currentColor" d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z" class=""></path></svg></span>
-							</div>
-						</div>
-						<div id = "browserPickListTableDiv">
-							
-						</div>
-						<div id = "browserPickListTableControl" class = "row">
-							<div class = "pickListTableShow col left-block">
-									Showing <span id = "startIndex" ></span> to
-									<span id = "endIndex" ></span> of
-									<span id = "totalIndex"></span> entries
-								</div>
-							<div class = " right-block">
-								<button type = "button" id = "pickListPrevBtn" onClick = "listTablePagination(1)" class = "btn btn-success">Prev</button>
-								<button type = "button" id = "pickListNextBtn" onClick = "listTablePagination(2)" class = "btn btn-success">Next</button>
-							</div>
-							
-							<input type = "text" id = "currentPickListIndex" style = "display:none" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<p class="totop"> 
 				<a href="#top">^</a> 
 		</p>

@@ -79,6 +79,11 @@ $(document).ready(function() {
       changeColorInput();
     }
   });
+  $("#search-input").on("keyup", function(e) {
+    if (e.keyCode == 13) {
+      changeSearchInput();
+    }
+  });
   if ($("#trademarkInput").val() != undefined) {
     if ($("#trademarkInput").val().length == 0) {
       $("#trademarkInput").val(getCookie("trademarkName"));
@@ -102,6 +107,7 @@ $(document).ready(function() {
   }
   if ($(".costParentDiv")[0] != undefined) {
     var cookieValue = getCookie("CostCount");
+    //console.log(cookieValue);
     if (cookieValue != 0 && cookieValue != "") {
       cookieValue =
         "($199 + $275) × " + cookieValue / 474 + " = $" + cookieValue;
@@ -109,7 +115,32 @@ $(document).ready(function() {
       $(".costParentDiv").css("display", "inherit");
     }
   }
+  if ($(".myTradeMarkName")[0] != undefined) {
+    var cookieValue = getCookie("trademarkName");
+    if (cookieValue != "" && cookieValue != undefined) {
+      $(".myTradeMarkName")[0].innerHTML = cookieValue;
+    }
+  }
+  if ($("#trademarkNameDivBody")[0] != undefined) {
+    var cookieValue = getCookie("trademarkName");
+    if (cookieValue != "" && cookieValue != undefined) {
+      $("#trademarkNameDivBody")[0].innerHTML = cookieValue;
+    }
+  }
+  if ($(".questionForm")[0] != undefined) {
+    var datepickerList = addQuestions();
+    datepickerList.forEach(function(each) {
+      $(each).datepicker({
+        format: "mm-dd-yyyy",
+        todayBtn: "linked"
+      });
+    });
+  }
 });
+
+function continueClicked() {
+  console.log("123qwerqwer");
+}
 
 $(".tooltip-container svg").mouseover(function() {
   $(".tooltip-container span").css("opacity", "1");
@@ -117,6 +148,10 @@ $(".tooltip-container svg").mouseover(function() {
 $(".tooltip-container svg").mouseout(function() {
   $(".tooltip-container span").css("opacity", "0");
 });
+
+/*$("#continueBtn").click(function() {
+  $("#submitBtn").click();
+});*/
 
 $("#imageDetailNext").click(function() {
   if ($("#imageDetailStep").val() == 1) {
@@ -196,6 +231,189 @@ $("#imageDetailDialog").on("hidden.bs.modal", function() {
   $("#myColorInput").val("");
   $("#imageDetailDialogLongTitle").text("Type your image description");
 });
+
+function radioBtnClicked(id) {
+  if (id.split("-")[1] == "1") {
+    $(
+      "#" + id
+    )[0].parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].style.display =
+      "inherit";
+  } else {
+    $(
+      "#" + id
+    )[0].parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].style.display =
+      "none";
+  }
+}
+
+function getRadio(text, className, num) {
+  var yesRadio = document.createElement("div");
+  yesRadio.setAttribute("class", "form-check form-check-inline");
+  var yesInputRadio = document.createElement("input");
+  yesInputRadio.setAttribute("class", "form-check-input");
+  yesInputRadio.setAttribute("type", "radio");
+  yesInputRadio.setAttribute(
+    "name",
+    "radioOption" + className.split(" ")[1].trim()
+  );
+  yesInputRadio.setAttribute(
+    "id",
+    "radioOption" + className.split(" ")[1].trim() + "-" + num
+  );
+  yesInputRadio.setAttribute("value", "option1");
+  yesInputRadio.setAttribute("onclick", "radioBtnClicked(id)");
+  var yesLabelRadio = document.createElement("label");
+  yesLabelRadio.innerHTML = text;
+  yesLabelRadio.setAttribute("class", "form-check-label");
+  yesLabelRadio.setAttribute(
+    "for",
+    "radioOption" + className.split(" ")[1].trim() + "-" + num
+  );
+  yesRadio.appendChild(yesInputRadio);
+  yesRadio.appendChild(yesLabelRadio);
+  return yesRadio;
+}
+
+function getDatePicker(text, className, num) {
+  var datepipckerContainer = document.createElement("div");
+  var datepickerHeader = document.createElement("div");
+  datepickerHeader.setAttribute("class", "datepickerHeader");
+  var redMul = document.createElement("span");
+  redMul.innerHTML = "*";
+  redMul.setAttribute("class", "redMul");
+  var datepickerText = document.createElement("span");
+  datepickerText.innerHTML = text;
+  datepickerHeader.appendChild(redMul);
+  datepickerHeader.appendChild(datepickerText);
+  datepipckerContainer.appendChild(datepickerHeader);
+  var datepickerDiv = document.createElement("div");
+  var datepicker = document.createElement("input");
+  datepicker.setAttribute("type", "text");
+  datepicker.setAttribute("class", "datepicker");
+  datepicker.setAttribute("value", "");
+  datepicker.setAttribute(
+    "id",
+    "dp" + className.split(" ")[1].trim() + "-" + num
+  );
+
+  datepickerDiv.appendChild(datepicker);
+  datepipckerContainer.appendChild(datepickerDiv);
+  return datepipckerContainer;
+}
+
+function addQuestions() {
+  let questionForm = $(".questionForm")[0];
+  var cookieValue = getCookie("PickLists");
+  var datepickerIdList = [];
+  console.log(cookieValue);
+  if (cookieValue != "") {
+    var picklistArr = cookieValue.split("~");
+    picklistArr.forEach(function(picklistEach) {
+      if (picklistEach != "") {
+        var picklistitems = picklistEach.split("`");
+        var classId = questionForm.querySelector(
+          "#classId" + picklistitems[3].split("-")[0].trim()
+        );
+        if (classId == null) {
+          var className = picklistitems[0].trim();
+          var questionClassDiv = document.createElement("div");
+          questionClassDiv.setAttribute("class", "questionClassDiv");
+          var questionClassHeader = document.createElement("div");
+          questionClassHeader.setAttribute("class", "questionClassHeader");
+          var imageElement = document.createElement("img");
+          imageElement.setAttribute("src", "./images/businessman.svg");
+          imageElement.setAttribute("class", "questionImage");
+          var questionTitle = document.createElement("div");
+          questionTitle.innerHTML = "Class " + picklistitems[3].trim();
+          questionTitle.setAttribute("class", "questionTitle");
+          questionTitle.setAttribute(
+            "id",
+            "classId" + picklistitems[3].split("-")[0].trim()
+          );
+          questionClassHeader.appendChild(imageElement);
+          questionClassHeader.appendChild(questionTitle);
+
+          var questionBody = document.createElement("div");
+          questionBody.setAttribute("class", "questionBody");
+          var questionText = document.createElement("div");
+          questionText.innerHTML =
+            "Are you currently selling any " +
+            picklistitems[3]
+              .trim()
+              .split("-")[1]
+              .trim() +
+            " using this logo in The United States?";
+          questionText.setAttribute("class", "questionText");
+          var questionRadioDiv = document.createElement("div");
+          questionRadioDiv.appendChild(getRadio("Yes", className, 1));
+          questionRadioDiv.appendChild(getRadio("No", className, 2));
+          questionRadioDiv.setAttribute("class", "questionRadioDiv");
+          questionText.appendChild(questionRadioDiv);
+          var questionsDiv = document.createElement("div");
+          questionsDiv.setAttribute("class", "questionsDiv");
+          var mainQuestion = document.createElement("div");
+          mainQuestion.setAttribute("class", "mainQuestion");
+          var mainQuestionTitle = document.createElement("div");
+          mainQuestionTitle.setAttribute("class", "mainQuestionTitle");
+          var redMul = document.createElement("span");
+          redMul.innerHTML = "*";
+          redMul.setAttribute("class", "redMul");
+          mainQuestionTitle.appendChild(redMul);
+          var mainQuestionTitleText = document.createElement("span");
+          mainQuestionTitleText.innerHTML =
+            "Describe what kind of " +
+            picklistitems[3]
+              .trim()
+              .split("-")[1]
+              .trim() +
+            " products  you will offer on which the logo trademark appears";
+          mainQuestionTitle.appendChild(mainQuestionTitleText);
+          mainQuestion.appendChild(mainQuestionTitle);
+          var mainQuestionBody = document.createElement("div");
+          mainQuestionBody.setAttribute("class", "mainQuestionBody form-group");
+          var mainQuestionTextArea = document.createElement("textarea");
+          mainQuestionTextArea.innerHTML = picklistitems[1] + ";  ";
+          mainQuestionTextArea.setAttribute("class", "form-control");
+          mainQuestionBody.appendChild(mainQuestionTextArea);
+          mainQuestion.appendChild(mainQuestionBody);
+          var otherQuestion = document.createElement("div");
+          otherQuestion.setAttribute("class", "otherQuestion");
+          otherQuestion.appendChild(
+            getDatePicker(
+              "When did you come up with the logo trademark for your business",
+              className,
+              1
+            )
+          );
+          otherQuestion.appendChild(
+            getDatePicker(
+              "When did start selling products using the logo trademark in The United States?",
+              className,
+              2
+            )
+          );
+          datepickerIdList.push(
+            "#dp" + className.split(" ")[1].trim() + "-" + 1
+          );
+          datepickerIdList.push(
+            "#dp" + className.split(" ")[1].trim() + "-" + 2
+          );
+          questionsDiv.appendChild(mainQuestion);
+          questionsDiv.appendChild(otherQuestion);
+          questionBody.appendChild(questionText);
+          questionBody.appendChild(questionsDiv);
+          questionClassDiv.appendChild(questionClassHeader);
+          questionClassDiv.appendChild(questionBody);
+          questionForm.appendChild(questionClassDiv);
+        } else {
+          classId.parentNode.parentNode.childNodes[1].childNodes[1].childNodes[0].childNodes[1].childNodes[0].innerHTML +=
+            picklistitems[1] + ";  ";
+        }
+      }
+    });
+  }
+  return datepickerIdList;
+}
 
 function changeColorInput() {
   if ($("#myColorInput").val().length != 0) {
@@ -291,6 +509,7 @@ function calcCosts() {
   if (serviceBody.innerHTML.trim() != "No services selected") {
     total += serviceBody.childNodes.length * 474;
   }
+  setCookie("CostCount", total);
   if (total == 0) {
     $(".costParentDiv").css("display", "none");
     if (
@@ -300,7 +519,6 @@ function calcCosts() {
       $("#step22continueBtn")[0].classList.add("disabled");
     }
   } else {
-    setCookie("CostCount", total);
     total = "($199 + $275) × " + total / 474 + " = $" + total;
     $(".costSpan")[0].innerHTML = total;
     $(".costParentDiv").css("display", "inherit");
@@ -477,7 +695,9 @@ function loadMoreEvent(pickListId) {
       "`" +
       item.childNodes[0].textContent +
       "`" +
-      pickItemType;
+      pickItemType +
+      "`" +
+      item.parentNode.childNodes[1].childNodes[2].textContent;
     setCookie("PickLists", cookieValue);
   });
 }
@@ -545,6 +765,8 @@ function changeSearchInput() {
                     lEach.CID +
                     "</span><span class = 'pickListTypeSpan'>" +
                     (lEach.CID < 35 ? "goods" : "services") +
+                    "</span><span class = 'pickListClassName'>" +
+                    lEach.CName +
                     "</span></div> <div title = '" +
                     each.Sentence +
                     "' class = 'pickListChildBody'>" +
@@ -571,18 +793,23 @@ function changeSearchInput() {
             });
           }
         });
-        var x = document.createElement("a");
-        x.appendChild(document.createTextNode("Load More"));
-        x.classList.add("loadMore");
-        $("#pickListBody")[0].appendChild(x);
-        $("#pickListDiv").css("display", "inherit");
-        $("#pickListBody div")
-          .slice(0, 10)
-          .show();
+        if (list.length != 0) {
+          var x = document.createElement("a");
+          x.appendChild(document.createTextNode("Load More"));
+          x.classList.add("loadMore");
+          $("#pickListBody")[0].appendChild(x);
+          $("#pickListDiv").css("display", "inherit");
+          $("#pickListBody div")
+            .slice(0, 10)
+            .show();
 
-        loadMoreEvent(".pickListChildBodySelect");
-        $("#selectTypeChatText p")[0].innerHTML =
-          "Please select at least one good or service to continue.To restrict your search to goods or services, use the filter options.";
+          loadMoreEvent(".pickListChildBodySelect");
+          $("#selectTypeChatText p")[0].innerHTML =
+            "Please select at least one good or service to continue.To restrict your search to goods or services, use the filter options.";
+        } else {
+          $("#selectTypeChatText p")[0].innerHTML =
+            "No Suggested Goods or Services been found. Please re-enter the description of those Products or services that you are selling or trying to sell, so that we can recommend you the relevant Goods & Services";
+        }
         $("#searchInputSpinner").css("display", "none");
       });
   } else {
@@ -747,6 +974,16 @@ $("#companyButton").click(function() {
     //console.log($("#individualForm"));
     $(".individualForm")[0].classList.add("hide");
   $(".companyForm")[0].classList.remove("hide");
+  var form = $(".individualForm .form-control");
+  for (var i = 0; i < form.length; i++) {
+    var each = form[i];
+    each.removeAttribute("required");
+  }
+  var form = $(".companyForm .form-control");
+  for (var i = 0; i < form.length; i++) {
+    var each = form[i];
+    each.setAttribute("required", "");
+  }
 });
 $("#indivButton").click(function() {
   //console.log($("#indivButton")[0].classList);
@@ -758,4 +995,14 @@ $("#indivButton").click(function() {
   if (!$(".companyForm")[0].classList.contains("hide"))
     $(".companyForm")[0].classList.add("hide");
   $(".individualForm")[0].classList.remove("hide");
+  var form = $(".companyForm .form-control");
+  for (var i = 0; i < form.length; i++) {
+    var each = form[i];
+    each.removeAttribute("required");
+  }
+  var form = $(".individualForm .form-control");
+  for (var i = 0; i < form.length; i++) {
+    var each = form[i];
+    each.setAttribute("required", "");
+  }
 });
