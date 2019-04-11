@@ -863,3 +863,9 @@ body {
 select.form-control {
   margin: 0;
 }
+.datepicker {
+  border: solid 1px lightgray;
+  border-radius: 3px;
+  padding-left: 10px !important;
+  width: 200px;
+}

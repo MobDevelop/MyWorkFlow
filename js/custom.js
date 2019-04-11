@@ -79,6 +79,11 @@ $(document).ready(function() {
       changeColorInput();
     }
   });
+  $("#trademarkInput").on("keyup", function(e) {
+    if (e.keyCode == 13) {
+      trademarkBlur();
+    }
+  });
   $("#search-input").on("keyup", function(e) {
     if (e.keyCode == 13) {
       changeSearchInput();
@@ -133,6 +138,9 @@ $(document).ready(function() {
       $(each).datepicker({
         format: "mm-dd-yyyy",
         todayBtn: "linked"
+      });
+      $(each).on("changeDate", function(ev) {
+        $(this).datepicker("hide");
       });
     });
   }
@@ -238,11 +246,29 @@ function radioBtnClicked(id) {
       "#" + id
     )[0].parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].style.display =
       "inherit";
+    var inputTags = $(
+      "#" + id
+    )[0].parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].getElementsByTagName(
+      "input"
+    );
+    for (var i = 0; i < inputTags.length; i++) {
+      var each = inputTags[i];
+      each.setAttribute("required", "");
+    }
   } else {
     $(
       "#" + id
     )[0].parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].style.display =
       "none";
+    var inputTags = $(
+      "#" + id
+    )[0].parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].getElementsByTagName(
+      "input"
+    );
+    for (var i = 0; i < inputTags.length; i++) {
+      var each = inputTags[i];
+      each.removeAttribute("required");
+    }
   }
 }
 
@@ -287,9 +313,10 @@ function getDatePicker(text, className, num) {
   datepickerHeader.appendChild(datepickerText);
   datepipckerContainer.appendChild(datepickerHeader);
   var datepickerDiv = document.createElement("div");
+  datepickerDiv.setAttribute("class", "form-group");
   var datepicker = document.createElement("input");
   datepicker.setAttribute("type", "text");
-  datepicker.setAttribute("class", "datepicker");
+  datepicker.setAttribute("class", "datepicker form-control");
   datepicker.setAttribute("value", "");
   datepicker.setAttribute(
     "id",
@@ -374,6 +401,7 @@ function addQuestions() {
           var mainQuestionTextArea = document.createElement("textarea");
           mainQuestionTextArea.innerHTML = picklistitems[1] + ";  ";
           mainQuestionTextArea.setAttribute("class", "form-control");
+          mainQuestionTextArea.setAttribute("required", "");
           mainQuestionBody.appendChild(mainQuestionTextArea);
           mainQuestion.appendChild(mainQuestionBody);
           var otherQuestion = document.createElement("div");
@@ -1006,3 +1034,10 @@ $("#indivButton").click(function() {
     each.setAttribute("required", "");
   }
 });
+function addMoreOwners() {
+  var ownerInputs = $(".individualForm input:not(#country_selector)");
+  for (var i = 0; i < ownerInputs.length; i++) {
+    var each = ownerInputs[i];
+    each.value = "";
+  }
+}
