@@ -144,10 +144,88 @@ $(document).ready(function() {
       });
     });
   }
+  if ($("#exampleTable")[0] != undefined) {
+    $("#exampleTable thead tr")
+      .clone(true)
+      .appendTo("#exampleTable thead");
+    $("#exampleTable thead tr:eq(1) th:eq(1)")[0].innerHTML = "";
+    $("#exampleTable thead tr:eq(1) th").each(function(i) {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      $("input", this).on("keyup change", function() {
+        console.log(this);
+        if (table.column(i).search() !== this.value) {
+          table
+            .column(i)
+            .search(this.value)
+            .draw();
+        }
+      });
+    });
+
+    var table = $("#exampleTable").DataTable({
+      orderCellsTop: true,
+      fixedHeader: true,
+      columnDefs: [
+        {
+          targets: 0,
+          checkboxes: {
+            selectRow: true
+          }
+        },
+        { width: "10px", targets: [0] },
+        { width: "60%", targets: [2] }
+      ],
+      select: {
+        style: "multi"
+      },
+      order: [[1, "asc"]],
+      initComplete: function() {
+        this.api()
+          .columns([1])
+          .every(function() {
+            var column = this;
+            var select = $('<select><option value=""></option></select>')
+              .appendTo(column.context[0].nTHead.childNodes[3].childNodes[1])
+              .on("change", function() {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                column.search(val ? "^" + val + "$" : "", true, false).draw();
+              });
+
+            column
+              .data()
+              .unique()
+              .sort()
+              .each(function(d, j) {
+                select.append('<option value="' + d + '">' + d + "</option>");
+              });
+          });
+        $("#exampleTable thead tr:eq(1) th:eq(0)")[0].innerHTML = "";
+        $("#exampleTable thead tr:eq(1) th:eq(1) input")[0].style.display =
+          "none";
+        $("#exampleTable thead tr:eq(1) th:eq(1) select")[0].classList =
+          "form-control";
+      }
+    });
+  }
 });
 
 function continueClicked() {
   console.log("123qwerqwer");
+}
+
+function ownerFormSubmit() {
+  if ($(".companyForm")[0].classList.length == 1) {
+    //Organization Button Clicked
+    if (
+      $("#entityTypeSelect").val() == 2 ||
+      $("#entityTypeSelect").val() == 3
+    ) {
+      document.ownerForm.action = "step4-2.html";
+    } else document.ownerForm.action = "step5.html";
+  } else document.ownerForm.action = "step5.html";
+  return true;
 }
 
 $(".tooltip-container svg").mouseover(function() {
@@ -269,6 +347,20 @@ function radioBtnClicked(id) {
       var each = inputTags[i];
       each.removeAttribute("required");
     }
+  }
+}
+
+function anotherCountryFunction(id) {
+  if (id.split("-")[1] == "1") {
+    $(
+      "#" + id
+    )[0].parentElement.parentElement.parentElement.childNodes[3].style.display =
+      "inherit";
+  } else {
+    $(
+      "#" + id
+    )[0].parentElement.parentElement.parentElement.childNodes[3].style.display =
+      "none";
   }
 }
 
@@ -1040,4 +1132,8 @@ function addMoreOwners() {
     var each = ownerInputs[i];
     each.value = "";
   }
+}
+
+function onFinish() {
+  alert("End");
 }

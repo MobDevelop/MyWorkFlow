@@ -218,7 +218,7 @@ svg:not(:root).svg-inline--fa {
 #accordion {
   width: 100%;
 }
-.form-check-input {
+.card-header .form-check-input {
   margin-top: 0.7rem;
   margin-left: -0.3rem;
 }
@@ -868,4 +868,35 @@ select.form-control {
   border-radius: 3px;
   padding-left: 10px !important;
   width: 200px;
+}
+.acQuestionHeader {
+  font-size: 16px;
+}
+.acQuestionHeader img {
+  margin-right: 5px;
+}
+.acQuestionBody {
+  margin: 10px 0 0 35px;
+  font-size: 16px;
+}
+.acQuestionBody > div {
+  margin: 10px 0;
+}
+.mg-top-10 {
+  margin: 10px 0;
+}
+thead input {
+  width: 100%;
+}
+.page-item.active .page-link {
+  z-index: 0;
+}
+.summaryForm {
+  font-size: 14px;
+}
+.summary-right {
+  padding-left: 1.25rem;
+}
+.font-green {
+  color: green;
 }

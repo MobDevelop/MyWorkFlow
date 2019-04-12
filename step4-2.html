@@ -606,7 +606,7 @@
 						 </div>
 						 <div class="process-step">
 							<div class="tabsLink active">
-								<a href="step4.html">
+								<a href="step4-1.html">
 									<span class="tabIcon">
 										<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 										<g>
@@ -843,7 +843,7 @@
 								<div class="row">
 									<div class="col-sm-7">
 										<div class="sub-heading">
-												Check your ownership details(Optional)
+												Additional Ownership
 										</div>
 									</div>
 									<div class="col-sm-5 text-right hidden-xs">
@@ -860,12 +860,8 @@
 									</div>
 								</div>
 								<div class="row tabRow">
-									<div id = "ownerForm" class = "col col-lg-7">
-											<div class = "instructionButtons">
-													<span>I am applying as: </span>
-													<a id = "indivButton" tabindex="" class = "btn btn-primary">Individual</a>
-													<a id = "companyButton" tabindex="" class = "btn btn-outline-primary">Organization</a>
-											</div>
+									<div class = "col col-lg-7">
+											
 											<div class = "individualForm">
 												<div class = "row">
 													<div class = "col-lg-4 mr-auto text-align-right">
@@ -894,179 +890,14 @@
 														<input placeholder = "Citizenship" class = "form-control" required/>
 													</div>
 												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Address:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Address" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														City:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "City" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														State/Province:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "State/Province" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Country:
-													</div>
-													<div class = "col-lg-8 form-group indivCountrySelect">
-														<input id="country_selector" type="text" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Zip/Postal Code:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Zip/Postal Code:" class = "form-control" required/>
-													</div>
-												</div>
+												
 												<div class = "row">
 													<div class = "ml-auto mr-auto">
-													<a tabIndex = "" onclick="addMoreOwners()" class = "btn btn-primary">Add More Owners</a>
+													<a tabIndex = "" onclick="addMoreOwners()" class = "btn btn-primary"><i class="fa fa-plus"></i> Add More Owners</a>
 												</div>
 												</div>
 											</div>
-											<div class = "companyForm hide">
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Organinzation Name:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Organinzation Name" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Entity Type:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<select placeholder = "Entity Type" class = "form-control" required>
-																<option selected="selected" value="2">Corporation</option> 
-																<option value="3">LLC (Limited Liability Company)</option> 
-																<option value="4">Partnership</option> 
-																<option value="5">LP (Limited Partnership)</option> 
-																<option value="9">LLP (Limited Liability Partnership)</option> 
-																<option value="10">Ltd. (Limited Company)</option> 
-																<option value="11">LTDA (Limitada)</option> 
-																<option value="6">Joint Ventures</option> 
-																<option value="1">Proprietorship</option> 
-																<option value="7">Trust</option> 
-																<option value="12">S.A. </option> 
-																<option value="13">S.A. de C.V.</option> 
-																<option value="14">GmbH</option> 
-																<option value="15">mbH</option> 
-																<option value="16">N.V. </option> 
-																<option value="8">Other</option>															
-														</select>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Address:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Address" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														City:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "City" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														State/Province:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "State/Province" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Zip/Postal Code:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Zip/Postal Code" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Country:
-													</div>
-													<div class = "col-lg-8 form-group indivCountrySelect">
-														<input id="com_country_selector" type="text" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Place where legally organized:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Place where legally organized" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Contact Name:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Contact Name" class = "form-control" required/>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Contact Title:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<select placeholder = "Contact Title" class = "form-control" required>
-															<option>Corporate Officer</option>
-														</select>
-													</div>
-												</div>
-												<div class = "row">
-													<div class = "col-lg-4 mr-auto text-align-right">
-														<span class = "redMul">*</span>
-														Contact Phone:
-													</div>
-													<div class = "col-lg-8 form-group">
-														<input placeholder = "Contact Phone" class = "form-control" required/>
-													</div>
-												</div>
-											</div>
-											<button style = "display: none" id = "submitBtn"></button>
-										</div>
+									</div>
 									<div class = "col col-lg-5">
 											<div class = "costParentDiv">
 													<div class = "costDiv">
@@ -1079,9 +910,7 @@
 													<div class="row">
 														<div class="col-sm-8">
 															<div id ='selectTypeChatText' class="chatText">
-																<p>Enter your ownership details to check for issues you may encounter when applying. To skip this step, please click Continue.
-
-																	Note: This tool does not currently support more than one owner.<br/><a href = "https://www.trademarkia.com/trademark_statement/">Privacy Collection Statement</a></p>
+																<p>Please list the first name, last name, citizenship of all general partners, active members, individual, trustees or executors.</p>
 															</div>
 														</div>
 														<div class="col-sm-4">
