@@ -891,7 +891,9 @@
 														Citizenship:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Citizenship" class = "form-control" required/>
+														<select placeholder = "Citizenship" id = "indivCitizenSelect" class = "form-control">
+
+														</select>
 													</div>
 												</div>
 												<div class = "row">
@@ -927,7 +929,10 @@
 														Country:
 													</div>
 													<div class = "col-lg-8 form-group indivCountrySelect">
-														<input id="country_selector" type="text" class = "form-control" required/>
+														<!-- <input id="country_selector" type="text" class = "form-control" required/> -->
+														<select placeholder = "Citizenship" id = "indivCountrySelect" class = "form-control">
+
+														</select>
 													</div>
 												</div>
 												<div class = "row">
@@ -1023,7 +1028,10 @@
 														Country:
 													</div>
 													<div class = "col-lg-8 form-group indivCountrySelect">
-														<input id="com_country_selector" type="text" class = "form-control"/>
+														<!-- <input id="com_country_selector" type="text" class = "form-control"/> -->
+														<select placeholder = "Citizenship" id = "organizationCountrySelect" class = "form-control">
+
+														</select>
 													</div>
 												</div>
 												<div class = "row">
@@ -1052,6 +1060,17 @@
 													<div class = "col-lg-8 form-group">
 														<select placeholder = "Contact Title" class = "form-control">
 															<option>Corporate Officer</option>
+															<option>CEO</option>
+															<option>COO</option>
+															<option>CFO</option>
+															<option>Director</option>
+															<option>General Counsel</option>
+															<option>Manager</option>
+															<option>Owner</option>
+															<option>Partner</option>
+															<option>President</option>
+															<option>Shareholder</option>
+															<option>Other</option>
 														</select>
 													</div>
 												</div>
@@ -1135,7 +1154,7 @@
 		<script type="text/javascript" src="https://www.trademarkia.com/js/general.js"></script>
 		<script src="./js/countrySelect.js"></script>
 		<script>
-				$("#country_selector").countrySelect({
+				/* $("#country_selector").countrySelect({
 					 defaultCountry: "us",
 					// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
 					// responsiveDropdown: true,
@@ -1146,7 +1165,7 @@
 					// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
 					// responsiveDropdown: true,
 					preferredCountries: []
-				});
+				}); */
 			</script>
 		<script type="text/javascript" src="./js/custom.js"></script>
 	</body>

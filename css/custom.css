@@ -900,3 +900,6 @@ thead input {
 .font-green {
   color: green;
 }
+.questionClassHeader {
+  display: flex;
+}

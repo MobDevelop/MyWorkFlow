@@ -90,14 +90,15 @@ $(document).ready(function() {
     }
   });
   if ($("#trademarkInput").val() != undefined) {
+    // Step 1-2
     if ($("#trademarkInput").val().length == 0) {
       $("#trademarkInput").val(getCookie("trademarkName"));
     }
-  }
-  if ($("#trademarkInput").val() != undefined) {
     trademarkBlur();
   }
+
   if ($("#pickListBody")[0] != undefined) {
+    // Step 2-2
     console.log(document.cookie);
     var cookieValue = getCookie("PickLists");
     if (cookieValue != "") {
@@ -133,6 +134,7 @@ $(document).ready(function() {
     }
   }
   if ($(".questionForm")[0] != undefined) {
+    // Step 3-2
     var datepickerList = addQuestions();
     datepickerList.forEach(function(each) {
       $(each).datepicker({
@@ -144,6 +146,75 @@ $(document).ready(function() {
       });
     });
   }
+
+  if ($(".individualForm")[0] != undefined) {
+    //step4-1
+    fetch(
+      "https://cors-anywhere.herokuapp.com/" +
+        "https://www.trademarkia.com/services/country.ashx",
+      {
+        method: "GET",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        }
+      }
+    )
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(data) {
+        data.sort((a, b) =>
+          a.ShowOrder > b.ShowOrder ? 1 : b.ShowOrder > a.ShowOrder ? -1 : 0
+        );
+        var appendStr = "";
+        data.forEach(function(each) {
+          appendStr +=
+            "<option value = '" +
+            each.CountryID +
+            "'>" +
+            each.CountryName +
+            "</option>";
+        });
+        $("#indivCitizenSelect").html(appendStr);
+        $("#indivCountrySelect").html(appendStr);
+        $("#organizationCountrySelect").html(appendStr);
+      });
+  }
+
+  if ($(".acQuestionForm")[0] != undefined) {
+    //step5
+    fetch(
+      "https://cors-anywhere.herokuapp.com/" +
+        "https://www.trademarkia.com/services/country.ashx",
+      {
+        method: "GET",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        }
+      }
+    )
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(data) {
+        data.sort((a, b) =>
+          a.ShowOrder > b.ShowOrder ? 1 : b.ShowOrder > a.ShowOrder ? -1 : 0
+        );
+        var appendStr = "";
+        data.forEach(function(each) {
+          appendStr +=
+            "<option value = '" +
+            each.CountryID +
+            "'>" +
+            each.CountryName +
+            "</option>";
+        });
+        $("#summaryCountrySelect").html(appendStr);
+      });
+  }
+
   if ($("#exampleTable")[0] != undefined) {
     $("#exampleTable thead tr")
       .clone(true)
@@ -180,11 +251,40 @@ $(document).ready(function() {
         style: "multi"
       },
       order: [[1, "asc"]],
-      initComplete: function() {
-        this.api()
+      initComplete: function() {}
+    });
+
+    fetch(
+      "https://cors-anywhere.herokuapp.com/" +
+        "https://www.trademarkia.com/services/tm_country.ashx",
+      {
+        method: "GET",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        }
+      }
+    )
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(data) {
+        data.forEach(function(each) {
+          table.row
+            .add([
+              1,
+              each.Region,
+              each.CountryName + "(" + each.CountryCost + ")"
+            ])
+            .draw("false");
+        });
+        $("#exampleTable")
+          .dataTable()
+          .api()
           .columns([1])
           .every(function() {
             var column = this;
+            console.log(column);
             var select = $('<select><option value=""></option></select>')
               .appendTo(column.context[0].nTHead.childNodes[3].childNodes[1])
               .on("change", function() {
@@ -206,8 +306,10 @@ $(document).ready(function() {
           "none";
         $("#exampleTable thead tr:eq(1) th:eq(1) select")[0].classList =
           "form-control";
-      }
-    });
+        console.log($("#exampleTable_wrapper div.row:eq(2)"));
+        $("#exampleTable_wrapper>div.row:eq(2)>div:eq(0)")[0].classList = "col";
+        $("#exampleTable_wrapper>div.row:eq(2)>div:eq(1)")[0].classList = "col";
+      });
   }
 });
 
@@ -226,6 +328,11 @@ function ownerFormSubmit() {
     } else document.ownerForm.action = "step5.html";
   } else document.ownerForm.action = "step5.html";
   return true;
+}
+
+function ownerSearchAfterSubmit() {
+  console.log($("#questionForm"));
+  return false;
 }
 
 $(".tooltip-container svg").mouseover(function() {
@@ -449,7 +556,9 @@ function addQuestions() {
             "id",
             "classId" + picklistitems[3].split("-")[0].trim()
           );
-          questionClassHeader.appendChild(imageElement);
+          var imageDiv = document.createElement("div");
+          imageDiv.appendChild(imageElement);
+          questionClassHeader.appendChild(imageDiv);
           questionClassHeader.appendChild(questionTitle);
 
           var questionBody = document.createElement("div");
@@ -839,8 +948,8 @@ function cookieContainsCurrentValue(pickValue) {
 
 function changeSearchInput() {
   $("#pickListDiv").css("display", "none");
-  $("#searchInputSpinner").css("display", "inherit");
   if ($("#search-input").val().length != 0) {
+    $("#searchInputSpinner").css("display", "inherit");
     fetch(
       "https://cors-anywhere.herokuapp.com/" +
         "https://www.trademarkia.com/services/goodservice-recom.ashx?sw=" +

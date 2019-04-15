@@ -887,7 +887,9 @@
 															- In which country did you first file this mark?
 														</div>
 														<div class = "form-group indivCountrySelect">
-															<input id="country_selector" type="text" class = "form-control"/>
+															<!-- <input id="country_selector" type="text" class = "form-control"/> -->
+															<select placeholder = "Citizenship" id = "summaryCountrySelect" class = "form-control">
+															</select>
 														</div>
 													</div>
 													<div>
@@ -897,8 +899,8 @@
 														<div class = "form-group">
 															<select class = "form-control">
 																<option value = "1">In the last 6 months</option>
-																<option value = "2">In the last 1 year</option>
-																<option value = "3">In the last 3 year</option>
+																<option value = "2">More than 6 months ago</option>
+																<option value = "3">Do not know</option>
 															</select>
 														</div>
 														<div>
@@ -950,32 +952,7 @@
 																			</tr>
 																	</thead>
 																	<tbody>
-																			<tr>
-																					<td>2</td>
-																					<td>Africa</td>
-																					<td>South Africa</td>
-																			</tr>
-																			<tr><td>3</td>
-																					<td>Africa</td>
-																					<td>Egypt</td>
-																			</tr>
-																			<tr><td>4</td>
-																					<td>Europe</td>
-																					<td>France</td>
-																			</tr>
-																			<tr><td>5</td>
-																					<td>Europe</td>
-																					<td>Italy</td>
-																			</tr>
-																			<tr><td>6</td>
-																					<td>America</td>
-																					<td>U.S</td>
-																			</tr>
-																			<tr><td>7</td>
-																					<td>America</td>
-																					<td>Canada</td>
-																			</tr>
-																		</tbody>
+																	</tbody>
 																	</table>
 													</div>
 												</div>
@@ -1051,12 +1028,12 @@
 		<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 		<script src="./js/countrySelect.js"></script>
 		<script>
-				$("#country_selector").countrySelect({
+				/* $("#country_selector").countrySelect({
 					 defaultCountry: "us",
 					// onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
 					// responsiveDropdown: true,
 					preferredCountries: []
-				});
+				}); */
 			</script>
 		<script type="text/javascript" src="./js/custom.js"></script>
 	</body>
