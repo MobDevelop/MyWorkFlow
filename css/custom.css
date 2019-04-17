@@ -903,3 +903,17 @@ thead input {
 .questionClassHeader {
   display: flex;
 }
+.reviewHeader {
+  background-color: #44495d;
+  font-size: 18px;
+  padding: 10px;
+  color: white;
+}
+.smallHeader {
+  font-size: 18px;
+  padding: 10px;
+}
+.smallTexts {
+  font-size: 16px;
+  padding: 0px 20px;
+}

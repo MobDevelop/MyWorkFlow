@@ -32,6 +32,7 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet" />
 		<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 		<link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+		<link type="text/css" href="//cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.min.css" rel="stylesheet" />
 		<link href="https://www.trademarkia.com/css/style.css" rel="stylesheet" />
     <link href="./css/custom.css" rel="stylesheet" />
   </head>
@@ -490,7 +491,7 @@
 <div>     		
         <!-- page content starts here -->
         
-    <div class="page-content">
+    <form action = "step6.html" onsubmit = "return onSummarySubmit()" class="page-content">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3">
@@ -856,7 +857,7 @@
 														<a onClick="goBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
 													</li>
 												<li>
-													<a href="step6.html" class="btn btnstep">Continue</a>
+													<button type = "submit" class="btn btnstep">Continue</button>
 												</li>
 											</ul>
 										</div>
@@ -897,7 +898,7 @@
 															- When did you first file this trademark in another country?
 														</div>
 														<div class = "form-group">
-															<select class = "form-control">
+															<select id = "summaryDateSelect" class = "form-control">
 																<option value = "1">In the last 6 months</option>
 																<option value = "2">More than 6 months ago</option>
 																<option value = "3">Do not know</option>
@@ -946,7 +947,7 @@
 															<table id="exampleTable" class="table table-striped table-bordered" style="width:100%">
 																	<thead>
 																			<tr>
-																					<th></th>
+																					<th>ID</th>
 																					<th>Region</th>
 																					<th>Country Name</th>
 																			</tr>
@@ -991,7 +992,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 
          
 	</div>
@@ -1023,9 +1024,11 @@
     <script type="text/javascript" src="https://www.trademarkia.com/js/header_mm.js"></script> 
 		<script type="text/javascript" src="https://www.trademarkia.com/js/general.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 		<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
 		<script src="./js/countrySelect.js"></script>
 		<script>
 				/* $("#country_selector").countrySelect({

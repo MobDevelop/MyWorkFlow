@@ -27,7 +27,7 @@ $(document).ready(function() {
 var image = "";
 var imageRecognized = false;
 var columnCount = 6;
-
+var table = "";
 function getCookie(cKey) {
   var cookieValue = document.cookie;
   var cookieArr = cookieValue.split(";");
@@ -184,6 +184,7 @@ $(document).ready(function() {
 
   if ($(".acQuestionForm")[0] != undefined) {
     //step5
+
     fetch(
       "https://cors-anywhere.herokuapp.com/" +
         "https://www.trademarkia.com/services/country.ashx",
@@ -211,8 +212,119 @@ $(document).ready(function() {
             each.CountryName +
             "</option>";
         });
+
         $("#summaryCountrySelect").html(appendStr);
+        if (getCookie("summaryForm")) {
+          var summaryList = getCookie("summaryForm").split("~");
+          console.log(summaryList);
+          $(
+            "#anotherCountryRadio-" + (summaryList[0] == "option1" ? 1 : 2)
+          )[0].setAttribute("checked", "");
+          $(
+            "#anotherCountryRadio-" + (summaryList[0] == "option1" ? 2 : 1)
+          )[0].removeAttribute("checked");
+          $("#summaryCountrySelect").val(summaryList[1].split("("));
+          $("#summaryDateSelect").val(summaryList[2]);
+          $(
+            "#priorFilingRadio" + (summaryList[3] == "option1" ? 1 : 2)
+          )[0].setAttribute("checked", "");
+          $(
+            "#priorFilingRadio" + (summaryList[3] == "option1" ? 2 : 1)
+          )[0].removeAttribute("checked");
+          $("#multipleCountriesRadio-1")[0].removeAttribute("checked", "");
+          $(
+            "#multipleCountriesRadio-" +
+              (summaryList[4] == "option1"
+                ? 1
+                : summaryList[4] == "option2"
+                ? 2
+                : 3)
+          )[0].setAttribute("checked", "");
+        }
       });
+  }
+
+  if ($("#reviewTrademarkName")[0] != undefined) {
+    // step6
+    $("#reviewTrademarkName")[0].innerHTML = getCookie("trademarkName");
+    let pickLists = getCookie("PickLists").split("~");
+    let pickArray = [],
+      prevPick = null;
+    pickLists.forEach(function(pickEach) {
+      if (pickEach != "") {
+        let pickEachList = pickEach.split("`");
+        let temp = 0;
+        for (let i = 0; i < pickArray.length; i++) {
+          if (pickArray[i][0] == pickEachList[0]) {
+            pickArray[i][1] += " , " + pickEachList[1];
+            temp = 1;
+          }
+        }
+        if (temp == 0) {
+          pickArray.push(pickEachList);
+        }
+      }
+    });
+    let str = "";
+    pickArray.forEach(function(pickEach) {
+      str += pickEach[0] + ": " + pickEach[1] + "<br/>";
+    });
+    $("#reviewClassItems")[0].innerHTML = str;
+    let searchCookie = getCookie("searchForm");
+    let searchFormLists = searchCookie.split("~");
+    str = "";
+    if (searchFormLists != "") {
+      searchFormLists.forEach(function(searchEach) {
+        if (searchEach != "") {
+          let searchEachList = searchEach.split("`");
+          str +=
+            searchEachList[0] +
+            ": <br/>&nbsp&nbsp&nbsp description: " +
+            searchEachList[2] +
+            "<br/>";
+          if (searchEachList[3] != "") {
+            str +=
+              "&nbsp&nbsp&nbsp come up with the logo: " +
+              searchEachList[3] +
+              "<br/>";
+            str +=
+              "&nbsp&nbsp&nbsp start selling: " + searchEachList[4] + "<br/>";
+          }
+        }
+      });
+    }
+    $("#reviewClassInformation")[0].innerHTML = str;
+    str = "";
+    let multipleForm = getCookie("summaryForm");
+    console.log(multipleForm);
+    let multipleFormList = multipleForm.split("~");
+    str +=
+      "First Country: " +
+      multipleFormList[1].split("(")[1].split(")")[0] +
+      "<br/>";
+    var dateList = [
+      "In the last 6 months",
+      "More than 6 months ago",
+      "Do not know"
+    ];
+    str +=
+      "First date in other country: " +
+      dateList[multipleFormList[2] - 1] +
+      "<br/>";
+    str +=
+      "Want to try and claim priority on this prior filing: " +
+      (multipleFormList[3] == "option1" ? "Yes" : "No") +
+      "<br/>";
+    str +=
+      "Wish to register this trademark in multiple countries: " +
+      (multipleFormList[4] == "option1"
+        ? "Yes"
+        : multipleFormList[4] == "option2"
+        ? "No"
+        : "Maybe Later") +
+      "<br/>";
+    str += "Countries: " + multipleFormList[5].split("`").join(", ") + "<br/>";
+    $("#reviewMultipleCountries")[0].innerHTML = str;
   }
 
   if ($("#exampleTable")[0] != undefined) {
@@ -234,7 +346,7 @@ $(document).ready(function() {
       });
     });
 
-    var table = $("#exampleTable").DataTable({
+    table = $("#exampleTable").DataTable({
       orderCellsTop: true,
       fixedHeader: true,
       columnDefs: [
@@ -272,7 +384,7 @@ $(document).ready(function() {
         data.forEach(function(each) {
           table.row
             .add([
-              1,
+              each.CountryName,
               each.Region,
               each.CountryName + "(" + each.CountryCost + ")"
             ])
@@ -284,7 +396,6 @@ $(document).ready(function() {
           .columns([1])
           .every(function() {
             var column = this;
-            console.log(column);
             var select = $('<select><option value=""></option></select>')
               .appendTo(column.context[0].nTHead.childNodes[3].childNodes[1])
               .on("change", function() {
@@ -306,9 +417,26 @@ $(document).ready(function() {
           "none";
         $("#exampleTable thead tr:eq(1) th:eq(1) select")[0].classList =
           "form-control";
-        console.log($("#exampleTable_wrapper div.row:eq(2)"));
         $("#exampleTable_wrapper>div.row:eq(2)>div:eq(0)")[0].classList = "col";
         $("#exampleTable_wrapper>div.row:eq(2)>div:eq(1)")[0].classList = "col";
+        countryList = getCookie("summaryForm")
+          .split("~")[5]
+          .split("`");
+
+        let i = 0;
+        while (1) {
+          const currentRow = table.row(":eq(" + i + ")");
+          if (currentRow.data() == undefined) break;
+          countryList.forEach(function(countryEach) {
+            if (countryEach != "") {
+              if (countryEach == currentRow.data()[0]) {
+                console.log(currentRow);
+                currentRow.select();
+              }
+            }
+          });
+          i++;
+        }
       });
   }
 });
@@ -330,9 +458,66 @@ function ownerFormSubmit() {
   return true;
 }
 
-function ownerSearchAfterSubmit() {
-  console.log($("#questionForm"));
-  return false;
+function onSummarySubmit() {
+  var summaryStr =
+    $("input[name = anotherCountryOptions]:checked").val() +
+    "~" +
+    $("#summaryCountrySelect").val() +
+    "(" +
+    $("#summaryCountrySelect")[0].options[
+      $("#summaryCountrySelect")[0].selectedIndex
+    ].text +
+    ")" +
+    "~" +
+    $("#summaryDateSelect").val() +
+    "~" +
+    $("input[name = priorFilingOptions]:checked").val() +
+    "~" +
+    $("input[name = multipleCountriesOptions]:checked").val() +
+    "~";
+  var checkboxSel = table.column(0).checkboxes.selected();
+  //var checkboxStr = "";
+  for (var i = 0; i < checkboxSel.length; i++) {
+    //console.log(checkboxSel[i]);
+    summaryStr += checkboxSel[i] + "`";
+  }
+  console.log(summaryStr);
+  setCookie("summaryForm", summaryStr);
+  return true;
+}
+
+function ownerSearchAfterSubmit(e) {
+  var questionFormStr = "";
+  var form = $(".questionForm");
+  form[0].childNodes.forEach(function(each) {
+    if (each.nodeName != "#text") {
+      var selectedClass = each.childNodes[0].childNodes[1].innerHTML
+        .split("-")[0]
+        .trim();
+
+      questionFormStr +=
+        "~" +
+        selectedClass +
+        "`" +
+        $(
+          "input[name = radioOption" +
+            selectedClass.split(" ")[1].trim() +
+            "]:checked"
+        ).val() +
+        "`" +
+        each.childNodes[1].childNodes[1].childNodes[0].childNodes[1]
+          .childNodes[0].value +
+        "`" +
+        each.childNodes[1].childNodes[1].childNodes[1].childNodes[0]
+          .childNodes[1].childNodes[0].value +
+        "`" +
+        each.childNodes[1].childNodes[1].childNodes[1].childNodes[1]
+          .childNodes[1].childNodes[0].value;
+    }
+  });
+  //console.log(questionFormStr);
+  setCookie("searchForm", questionFormStr);
+  return true;
 }
 
 $(".tooltip-container svg").mouseover(function() {
@@ -485,8 +670,11 @@ function getRadio(text, className, num) {
     "id",
     "radioOption" + className.split(" ")[1].trim() + "-" + num
   );
-  yesInputRadio.setAttribute("value", "option1");
+  yesInputRadio.setAttribute("value", num == 1 ? "Yes" : "No");
   yesInputRadio.setAttribute("onclick", "radioBtnClicked(id)");
+  if (num == 2) {
+    yesInputRadio.setAttribute("checked", "");
+  }
   var yesLabelRadio = document.createElement("label");
   yesLabelRadio.innerHTML = text;
   yesLabelRadio.setAttribute("class", "form-check-label");
@@ -531,7 +719,6 @@ function addQuestions() {
   let questionForm = $(".questionForm")[0];
   var cookieValue = getCookie("PickLists");
   var datepickerIdList = [];
-  console.log(cookieValue);
   if (cookieValue != "") {
     var picklistArr = cookieValue.split("~");
     picklistArr.forEach(function(picklistEach) {
@@ -600,8 +787,12 @@ function addQuestions() {
           var mainQuestionBody = document.createElement("div");
           mainQuestionBody.setAttribute("class", "mainQuestionBody form-group");
           var mainQuestionTextArea = document.createElement("textarea");
-          mainQuestionTextArea.innerHTML = picklistitems[1] + ";  ";
+          mainQuestionTextArea.innerHTML = picklistitems[1];
           mainQuestionTextArea.setAttribute("class", "form-control");
+          mainQuestionTextArea.setAttribute(
+            "id",
+            "textArea" + className.split(" ")[1].trim()
+          );
           mainQuestionTextArea.setAttribute("required", "");
           mainQuestionBody.appendChild(mainQuestionTextArea);
           mainQuestion.appendChild(mainQuestionBody);
@@ -636,10 +827,45 @@ function addQuestions() {
           questionForm.appendChild(questionClassDiv);
         } else {
           classId.parentNode.parentNode.childNodes[1].childNodes[1].childNodes[0].childNodes[1].childNodes[0].innerHTML +=
-            picklistitems[1] + ";  ";
+            " , " + picklistitems[1];
         }
       }
     });
+    var searchCookie = getCookie("searchForm");
+    var searchFormLists = searchCookie.split("~");
+    if (searchFormLists != "" && $(".questionForm")[0].childNodes.length != 0) {
+      searchFormLists.forEach(function(searchEach) {
+        if (searchEach != "") {
+          console.log(searchEach);
+
+          var inputedData = searchEach.split("`");
+          var questionDiv = $("#classId" + inputedData[0].split(" ")[1]);
+          questionDiv = questionDiv[0].parentNode.parentNode;
+
+          radioBtnClicked(
+            "radioOption" +
+              inputedData[0].split(" ")[1] +
+              "-" +
+              (inputedData[1] == "Yes" ? 1 : 2)
+          );
+          $(
+            "#radioOption" +
+              inputedData[0].split(" ")[1] +
+              "-" +
+              (inputedData[1] == "Yes" ? 1 : 2)
+          )[0].setAttribute("checked", "");
+          $(
+            "#radioOption" +
+              inputedData[0].split(" ")[1] +
+              "-" +
+              (inputedData[1] == "Yes" ? 2 : 1)
+          )[0].removeAttribute("checked");
+          $("#textArea" + inputedData[0].split(" ")[1]).val(inputedData[2]);
+          $("#dp" + inputedData[0].split(" ")[1] + "-1").val(inputedData[3]);
+          $("#dp" + inputedData[0].split(" ")[1] + "-2").val(inputedData[4]);
+        }
+      });
+    }
   }
   return datepickerIdList;
 }
@@ -1236,11 +1462,30 @@ $("#indivButton").click(function() {
   }
 });
 function addMoreOwners() {
+  var indivStr =
+    $("#indivFirstName").val() +
+    "`" +
+    $("#indivLastName").val() +
+    "`" +
+    $("#indivCitizenSelect").val() +
+    "`" +
+    $("#indivAddress").val() +
+    "`" +
+    $("#indivCity").val() +
+    "`" +
+    $("#indivState").val() +
+    "`" +
+    $("#indivCountrySelect").val() +
+    "`" +
+    $("#indivZip").val();
   var ownerInputs = $(".individualForm input:not(#country_selector)");
   for (var i = 0; i < ownerInputs.length; i++) {
     var each = ownerInputs[i];
     each.value = "";
   }
+  var ownerCookie = getCookie("ownerForm");
+  console.log(ownerCookie);
+  setCookie("ownerForm", ownerCookie + "`" + indivStr);
 }
 
 function onFinish() {
