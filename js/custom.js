@@ -179,7 +179,22 @@ $(document).ready(function() {
         $("#indivCitizenSelect").html(appendStr);
         $("#indivCountrySelect").html(appendStr);
         $("#organizationCountrySelect").html(appendStr);
+        const currentStatus = getCookie("currentStatus");
+        if (currentStatus.split("`")[0] == "1") setOwnerForm(1);
+        else if (currentStatus.split("`")[0] == "2") {
+          $(".currentIndividual")[0].style.display = "none";
+          $("#companyButton").click();
+          setOrganizationForm();
+        }
       });
+  }
+
+  if ($(".additionalForm")[0] != undefined) {
+    //step4-2
+    const currentStatus = getCookie("currentStatus");
+    const ownerForm = getCookie("ownerForm");
+    console.log(currentStatus);
+    console.log(ownerForm);
   }
 
   if ($(".acQuestionForm")[0] != undefined) {
@@ -441,6 +456,82 @@ $(document).ready(function() {
   }
 });
 
+function setOrganizationForm() {
+  const orgList = getCookie("ownerForm")
+    .split("~")[1]
+    .split("`");
+  console.log(orgList);
+  $("#organizationName").val(orgList[0]);
+  $("#entityTypeSelect").val(orgList[1]);
+  $("#organizationAddress").val(orgList[2]);
+  $("#organizationCity").val(orgList[3]);
+  $("#organizationState").val(orgList[4]);
+  $("#organizationZip").val(orgList[5]);
+  $("#organizationCountrySelect").val(orgList[6]);
+  $("#organizationPlace").val(orgList[7]);
+  $("#organizationContactName").val(orgList[8]);
+  $("#organizationContactTitle").val(orgList[9]);
+  $("#organizationContactPhone").val(orgList[10]);
+}
+
+function setOwnerForm(num) {
+  let ownerList = getCookie("ownerForm").split("~");
+  if (getCookie("ownerForm") == "") {
+    return;
+  }
+  const currentStatus = getCookie("currentStatus");
+  let currentOwner = ownerList[num];
+  if (currentStatus.split("`")[0] == "1") {
+    let currentOwnerList = currentOwner.split("`");
+    $("#indivFirstName").val(currentOwnerList[0]);
+    $("#indivLastName").val(currentOwnerList[1]);
+    $("#indivCitizenSelect").val(currentOwnerList[2]);
+    $("#indivAddress").val(currentOwnerList[3]);
+    $("#indivCity").val(currentOwnerList[4]);
+    $("#indivState").val(currentOwnerList[5]);
+    $("#indivCountrySelect").val(currentOwnerList[6]);
+    $("#indivZip").val(currentOwnerList[7]);
+  }
+  if (num == 1) {
+    setCookie(
+      "currentStatus",
+      currentStatus.split("`")[0] + "`" + currentStatus.split("`")[1] + "`2"
+    );
+  } else {
+    setCookie(
+      "currentStatus",
+      currentStatus.split("`")[0] +
+        "`" +
+        currentStatus.split("`")[1] +
+        "`" +
+        (parseInt(num) + 1)
+    );
+  }
+  $(".currentIndividual")[0].innerHTML =
+    parseInt(getCookie("currentStatus").split("`")[2] - 1) +
+    "/" +
+    getCookie("currentStatus").split("`")[1];
+  console.log(getCookie("currentStatus"));
+}
+
+function ownerBack() {
+  const currentStatus = getCookie("currentStatus");
+  if (parseInt(currentStatus.split("`")[2]) <= 2) {
+    self.location = "step3-2.html";
+  } else {
+    setCookie(
+      "currentStatus",
+      currentStatus.split("`")[0] +
+        "`" +
+        currentStatus.split("`")[1] +
+        "`" +
+        (parseInt(currentStatus.split("`")[2]) - 1)
+    );
+    setOwnerForm(parseInt(currentStatus.split("`")[2]) - 2);
+    console.log(currentStatus);
+  }
+}
+
 function continueClicked() {
   console.log("123qwerqwer");
 }
@@ -454,7 +545,63 @@ function ownerFormSubmit() {
     ) {
       document.ownerForm.action = "step4-2.html";
     } else document.ownerForm.action = "step5.html";
-  } else document.ownerForm.action = "step5.html";
+    const orgStr =
+      $("#organizationName").val() +
+      "`" +
+      $("#entityTypeSelect").val() +
+      "`" +
+      $("#organizationAddress").val() +
+      "`" +
+      $("#organizationCity").val() +
+      "`" +
+      $("#organizationState").val() +
+      "`" +
+      $("#organizationZip").val() +
+      "`" +
+      $("#organizationCountrySelect").val() +
+      "`" +
+      $("#organizationPlace").val() +
+      "`" +
+      $("#organizationContactName").val() +
+      "`" +
+      $("#organizationContactTitle").val() +
+      "`" +
+      $("#organizationContactPhone").val();
+    setCookie("ownerForm", "~" + orgStr);
+    setCookie("currentStatus", "2`1`1");
+  } else {
+    //Individual
+    const currentStatus = getCookie("currentStatus");
+    if (
+      parseInt(currentStatus.split("`")[1]) >=
+      parseInt(currentStatus.split("`")[2])
+    ) {
+      const indivStr =
+        $("#indivFirstName").val() +
+        "`" +
+        $("#indivLastName").val() +
+        "`" +
+        $("#indivCitizenSelect").val() +
+        "`" +
+        $("#indivAddress").val() +
+        "`" +
+        $("#indivCity").val() +
+        "`" +
+        $("#indivState").val() +
+        "`" +
+        $("#indivCountrySelect").val() +
+        "`" +
+        $("#indivZip").val();
+
+      const ownerCookie = getCookie("ownerForm");
+      let ownerList = ownerCookie.split("~");
+      ownerList[parseInt(currentStatus.split("`")[2]) - 1] = indivStr;
+      setCookie("ownerForm", ownerList.join("~"));
+      setOwnerForm(currentStatus.split("`")[2]);
+      return false;
+    }
+    document.ownerForm.action = "step5.html";
+  }
   return true;
 }
 
@@ -1484,8 +1631,20 @@ function addMoreOwners() {
     each.value = "";
   }
   var ownerCookie = getCookie("ownerForm");
-  console.log(ownerCookie);
-  setCookie("ownerForm", ownerCookie + "`" + indivStr);
+  setCookie("ownerForm", ownerCookie + "~" + indivStr);
+  var statusCookie = getCookie("currentStatus");
+  if (statusCookie == "") {
+    setCookie("currentStatus", "1`1`1");
+  } else {
+    setCookie(
+      "currentStatus",
+      "1`" +
+        (parseInt(statusCookie.split("`")[1]) + 1) +
+        "`" +
+        (parseInt(statusCookie.split("`")[1]) + 2)
+    );
+    setOwnerForm(parseInt(statusCookie.split("`")[1]) + 1);
+  }
 }
 
 function onFinish() {

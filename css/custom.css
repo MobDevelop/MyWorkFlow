@@ -741,11 +741,12 @@ body {
   margin-left: 15px;
 }
 .individualForm div,
-.companyForm div {
+.companyForm div,
+.additionalForm div {
   font-size: 16px;
 }
 .individualForm,
-.companyForm {
+.companyForm .additionalForm {
   margin-top: 20px;
 }
 .indivApplicant .row {
@@ -912,8 +913,15 @@ thead input {
 .smallHeader {
   font-size: 18px;
   padding: 10px;
+  color: green;
 }
 .smallTexts {
   font-size: 16px;
   padding: 0px 20px;
+}
+.currentIndividual {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  font-size: 20px;
 }

@@ -487,7 +487,7 @@
 <div>     		
         <!-- page content starts here -->
         
-    <form name = "ownerForm" onSubmit = "ownerFormSubmit()" class="page-content">
+    <form name = "ownerForm" onsubmit = "return ownerFormSubmit()" class="page-content">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3">
@@ -850,7 +850,7 @@
 										<div class="button-right-aside">
 											<ul>
 												<li>
-														<a onClick="goBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
+														<a onclick="ownerBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
 													</li>
 												<li>
 													<button type = "submit" class="btn btnstep">Continue</button>
@@ -865,6 +865,7 @@
 													<span>I am applying as: </span>
 													<a id = "indivButton" tabindex="" class = "btn btn-primary">Individual</a>
 													<a id = "companyButton" tabindex="" class = "btn btn-outline-primary">Organization</a>
+													<span class = "currentIndividual"></span>
 											</div>
 											<div class = "individualForm">
 												<div class = "row">
@@ -957,7 +958,7 @@
 														Organinzation Name:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Organinzation Name" class = "form-control"/>
+														<input placeholder = "Organinzation Name" id = "organizationName" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -992,7 +993,7 @@
 														Address:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Address" class = "form-control"/>
+														<input placeholder = "Address" id = "organizationAddress" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -1001,7 +1002,7 @@
 														City:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "City" class = "form-control"/>
+														<input placeholder = "City" id = "organizationCity" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -1010,7 +1011,7 @@
 														State/Province:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "State/Province" class = "form-control"/>
+														<input placeholder = "State/Province" id = "organizationState" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -1019,7 +1020,7 @@
 														Zip/Postal Code:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Zip/Postal Code" class = "form-control"/>
+														<input placeholder = "Zip/Postal Code" id = "organizationZip" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -1040,7 +1041,7 @@
 														Place where legally organized:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Place where legally organized" class = "form-control"/>
+														<input placeholder = "Place where legally organized" id = "organizationPlace" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -1049,7 +1050,7 @@
 														Contact Name:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Contact Name" class = "form-control"/>
+														<input placeholder = "Contact Name" id = "organizationContactName" class = "form-control"/>
 													</div>
 												</div>
 												<div class = "row">
@@ -1058,7 +1059,7 @@
 														Contact Title:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<select placeholder = "Contact Title" class = "form-control">
+														<select placeholder = "Contact Title" id = "organizationContactTitle" class = "form-control">
 															<option>Corporate Officer</option>
 															<option>CEO</option>
 															<option>COO</option>
@@ -1080,7 +1081,7 @@
 														Contact Phone:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Contact Phone" class = "form-control"/>
+														<input placeholder = "Contact Phone" id = "organizationContactPhone" class = "form-control"/>
 													</div>
 												</div>
 											</div>
