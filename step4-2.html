@@ -487,7 +487,7 @@
 <div>     		
         <!-- page content starts here -->
         
-    <form action = "step5.html" class="page-content">
+    <form name = "orgForm" onsubmit = "return orgFormSubmit()" class="page-content">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3">
@@ -845,12 +845,13 @@
 										<div class="sub-heading">
 												Additional Ownership
 										</div>
+										<span class = "currentIndividual"></span>
 									</div>
 									<div class="col-sm-5 text-right hidden-xs">
 										<div class="button-right-aside">
 											<ul>
 												<li>
-														<a onClick="goBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
+														<a onclick="orgBack()" class="btn btnstep btnback"><i class="fa fa-angle-left" aria-hidden="true"></i>Back </a>
 													</li>
 												<li>
 													<button type = "submit" class="btn btnstep">Continue</button>
@@ -869,7 +870,7 @@
 														First Name:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "First Name" class = "form-control" required/>
+														<input placeholder = "First Name" id = "ownerFirstName" class = "form-control" required/>
 													</div>
 												</div>
 												<div class = "row">
@@ -878,7 +879,7 @@
 														Last Name:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Last Name" class = "form-control" required/>
+														<input placeholder = "Last Name" id = "ownerLastName" class = "form-control" required/>
 													</div>
 												</div>
 												<div class = "row">
@@ -887,14 +888,19 @@
 														Citizenship:
 													</div>
 													<div class = "col-lg-8 form-group">
-														<input placeholder = "Citizenship" class = "form-control" required/>
+														<select placeholder = "Citizenship" id = "ownerCitizen" class = "form-control" required>
+
+														</select>
 													</div>
 												</div>
 												
 												<div class = "row">
 													<div class = "ml-auto mr-auto">
-													<a tabIndex = "" onclick="addMoreOwners()" class = "btn btn-primary"><i class="fa fa-plus"></i> Add More Owners</a>
-												</div>
+														<a tabIndex = "" onclick="addMoreOrgs()" class = "btn btn-primary"><i class="fa fa-plus"></i> Add More Owners</a>
+													</div>
+													<div class = "ml-auto mr-auto">
+														<a tabIndex = "" onclick="deleteOrg()" class = "btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
+													</div>
 												</div>
 											</div>
 									</div>

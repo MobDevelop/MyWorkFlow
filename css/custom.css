@@ -746,7 +746,8 @@ body {
   font-size: 16px;
 }
 .individualForm,
-.companyForm .additionalForm {
+.companyForm,
+.additionalForm {
   margin-top: 20px;
 }
 .indivApplicant .row {

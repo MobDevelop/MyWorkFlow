@@ -28,6 +28,25 @@ var image = "";
 var imageRecognized = false;
 var columnCount = 6;
 var table = "";
+const entityList = [
+  "",
+  "Proprietorship",
+  "Corporation",
+  "LLC (Limited Liability Company)",
+  "Partnership",
+  "LP (Limited Partnership)",
+  "Joint Ventures",
+  "Trust",
+  "Other",
+  "LLP (Limited Liability Partnership)",
+  "Ltd. (Limited Company)",
+  "LTDA (Limitada)",
+  "S.A. ",
+  "S.A. de C.V.",
+  "GmbH",
+  "mbH",
+  "N.V. "
+];
 function getCookie(cKey) {
   var cookieValue = document.cookie;
   var cookieArr = cookieValue.split(";");
@@ -149,6 +168,9 @@ $(document).ready(function() {
 
   if ($(".individualForm")[0] != undefined) {
     //step4-1
+    console.log(getCookie("currentStatus"));
+    console.log(getCookie("ownerForm"));
+    //setCookie("currentStatus", "");
     fetch(
       "https://cors-anywhere.herokuapp.com/" +
         "https://www.trademarkia.com/services/country.ashx",
@@ -165,7 +187,7 @@ $(document).ready(function() {
       })
       .then(function(data) {
         data.sort((a, b) =>
-          a.ShowOrder > b.ShowOrder ? 1 : b.ShowOrder > a.ShowOrder ? -1 : 0
+          a.ShowOrder > b.ShowOrder ? -1 : b.ShowOrder > a.ShowOrder ? 1 : 0
         );
         var appendStr = "";
         data.forEach(function(each) {
@@ -191,10 +213,42 @@ $(document).ready(function() {
 
   if ($(".additionalForm")[0] != undefined) {
     //step4-2
-    const currentStatus = getCookie("currentStatus");
-    const ownerForm = getCookie("ownerForm");
-    console.log(currentStatus);
-    console.log(ownerForm);
+    fetch(
+      "https://cors-anywhere.herokuapp.com/" +
+        "https://www.trademarkia.com/services/country.ashx",
+      {
+        method: "GET",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
+        }
+      }
+    )
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(data) {
+        data.sort((a, b) =>
+          a.ShowOrder > b.ShowOrder ? -1 : b.ShowOrder > a.ShowOrder ? 1 : 0
+        );
+        var appendStr = "";
+        data.forEach(function(each) {
+          appendStr +=
+            "<option value = '" +
+            each.CountryID +
+            "'>" +
+            each.CountryName +
+            "</option>";
+        });
+        $("#ownerCitizen").html(appendStr);
+        const currentStatus = getCookie("currentStatus");
+        const ownerForm = getCookie("ownerForm");
+        console.log(currentStatus);
+        console.log(ownerForm);
+        if (currentStatus.split("`")[1] >= 2) {
+          setOrgForm(2);
+        }
+      });
   }
 
   if ($(".acQuestionForm")[0] != undefined) {
@@ -216,7 +270,7 @@ $(document).ready(function() {
       })
       .then(function(data) {
         data.sort((a, b) =>
-          a.ShowOrder > b.ShowOrder ? 1 : b.ShowOrder > a.ShowOrder ? -1 : 0
+          a.ShowOrder > b.ShowOrder ? -1 : b.ShowOrder > a.ShowOrder ? 1 : 0
         );
         var appendStr = "";
         data.forEach(function(each) {
@@ -261,85 +315,177 @@ $(document).ready(function() {
 
   if ($("#reviewTrademarkName")[0] != undefined) {
     // step6
-    $("#reviewTrademarkName")[0].innerHTML = getCookie("trademarkName");
-    let pickLists = getCookie("PickLists").split("~");
-    let pickArray = [],
-      prevPick = null;
-    pickLists.forEach(function(pickEach) {
-      if (pickEach != "") {
-        let pickEachList = pickEach.split("`");
-        let temp = 0;
-        for (let i = 0; i < pickArray.length; i++) {
-          if (pickArray[i][0] == pickEachList[0]) {
-            pickArray[i][1] += " , " + pickEachList[1];
-            temp = 1;
-          }
-        }
-        if (temp == 0) {
-          pickArray.push(pickEachList);
+    fetch(
+      "https://cors-anywhere.herokuapp.com/" +
+        "https://www.trademarkia.com/services/country.ashx",
+      {
+        method: "GET",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true
         }
       }
-    });
-    let str = "";
-    pickArray.forEach(function(pickEach) {
-      str += pickEach[0] + ": " + pickEach[1] + "<br/>";
-    });
-    $("#reviewClassItems")[0].innerHTML = str;
-    let searchCookie = getCookie("searchForm");
-    let searchFormLists = searchCookie.split("~");
-    str = "";
-    if (searchFormLists != "") {
-      searchFormLists.forEach(function(searchEach) {
-        if (searchEach != "") {
-          let searchEachList = searchEach.split("`");
-          str +=
-            searchEachList[0] +
-            ": <br/>&nbsp&nbsp&nbsp description: " +
-            searchEachList[2] +
-            "<br/>";
-          if (searchEachList[3] != "") {
+    )
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(data) {
+        let countryList = [];
+        data.forEach(function(each) {
+          countryList[each["CountryID"]] = each["CountryName"];
+        });
+        console.log(countryList);
+        $("#reviewTrademarkName")[0].innerHTML = getCookie("trademarkName");
+        let pickLists = getCookie("PickLists").split("~");
+        let pickArray = [],
+          prevPick = null;
+        pickLists.forEach(function(pickEach) {
+          if (pickEach != "") {
+            let pickEachList = pickEach.split("`");
+            let temp = 0;
+            for (let i = 0; i < pickArray.length; i++) {
+              if (pickArray[i][0] == pickEachList[0]) {
+                pickArray[i][1] += " , " + pickEachList[1];
+                temp = 1;
+              }
+            }
+            if (temp == 0) {
+              pickArray.push(pickEachList);
+            }
+          }
+        });
+        let str = "";
+        pickArray.forEach(function(pickEach) {
+          str += pickEach[0] + ": " + pickEach[1] + "<br/>";
+        });
+        $("#reviewClassItems")[0].innerHTML = str;
+        let searchCookie = getCookie("searchForm");
+        let searchFormLists = searchCookie.split("~");
+        str = "";
+        if (searchFormLists != "") {
+          searchFormLists.forEach(function(searchEach) {
+            if (searchEach != "") {
+              let searchEachList = searchEach.split("`");
+              str +=
+                searchEachList[0] +
+                ": <br/>&nbsp&nbsp&nbsp description: " +
+                searchEachList[2] +
+                "<br/>";
+              if (searchEachList[3] != "") {
+                str +=
+                  "&nbsp&nbsp&nbsp come up with the logo: " +
+                  searchEachList[3] +
+                  "<br/>";
+                str +=
+                  "&nbsp&nbsp&nbsp start selling: " +
+                  searchEachList[4] +
+                  "<br/>";
+              }
+            }
+          });
+        }
+        $("#reviewClassInformation")[0].innerHTML = str;
+        str = "";
+        let multipleForm = getCookie("summaryForm");
+        let multipleFormList = multipleForm.split("~");
+        str +=
+          "First Country: " +
+          multipleFormList[1].split("(")[1].split(")")[0] +
+          "<br/>";
+        var dateList = [
+          "In the last 6 months",
+          "More than 6 months ago",
+          "Do not know"
+        ];
+        str +=
+          "First date in other country: " +
+          dateList[multipleFormList[2] - 1] +
+          "<br/>";
+        str +=
+          "Want to try and claim priority on this prior filing: " +
+          (multipleFormList[3] == "option1" ? "Yes" : "No") +
+          "<br/>";
+        str +=
+          "Wish to register this trademark in multiple countries: " +
+          (multipleFormList[4] == "option1"
+            ? "Yes"
+            : multipleFormList[4] == "option2"
+            ? "No"
+            : "Maybe Later") +
+          "<br/>";
+        str +=
+          "Countries: " + multipleFormList[5].split("`").join(", ") + "<br/>";
+        $("#reviewMultipleCountries")[0].innerHTML = str;
+        const currentStatus = getCookie("currentStatus").split("`");
+        const ownerForm = getCookie("ownerForm").split("~");
+        console.log(currentStatus);
+        if (currentStatus[0] == "1") {
+          str = "Individual<br/><br/>";
+          for (let i = 0; i < parseInt(currentStatus[1]); i++) {
+            const ownerEach = ownerForm[i + 1].split("`");
             str +=
-              "&nbsp&nbsp&nbsp come up with the logo: " +
-              searchEachList[3] +
-              "<br/>";
-            str +=
-              "&nbsp&nbsp&nbsp start selling: " + searchEachList[4] + "<br/>";
+              "First Name: " +
+              ownerEach[0] +
+              "<br/>Last Name: " +
+              ownerEach[1] +
+              "<br/>Citizenship: " +
+              countryList[ownerEach[2]] +
+              "<br/>Address: " +
+              ownerEach[3] +
+              "<br/>City: " +
+              ownerEach[4] +
+              "<br/>State/Province: " +
+              ownerEach[5] +
+              "<br/>Country: " +
+              countryList[ownerEach[6]] +
+              "<br/>Zip/Postal Code: " +
+              ownerEach[7];
+            str += "<br/><br/>";
           }
         }
+        if (currentStatus[0] == "2") {
+          str = "Organization<br/><br/>";
+
+          const ownerEach = ownerForm[1].split("`");
+          str +=
+            "Organinzation Name: " +
+            ownerEach[0] +
+            "<br/>Entity Type: " +
+            entityList[ownerEach[1]] +
+            "<br/>Address: " +
+            ownerEach[2] +
+            "<br/>City: " +
+            ownerEach[3] +
+            "<br/>State/Province: " +
+            ownerEach[4] +
+            "<br/>Zip/Postal Code: " +
+            ownerEach[5] +
+            "<br/>Country: " +
+            countryList[ownerEach[6]] +
+            "<br/>Place where legally organized: " +
+            ownerEach[7] +
+            "<br/>Contact Name: " +
+            ownerEach[8] +
+            "<br/>Contact Title: " +
+            ownerEach[9] +
+            "<br/> Contact Phone: " +
+            ownerEach[10];
+
+          str += "<br/><br/>Additional Owners<br/><br/>";
+          for (let i = 2; i <= currentStatus[1]; i++) {
+            const addEach = ownerForm[i].split("`");
+            str +=
+              "First Name: " +
+              addEach[0] +
+              "<br/>Last Name: " +
+              addEach[1] +
+              "<br/>Citizenship: " +
+              countryList[addEach[2]];
+            str += "<br/><br/>";
+          }
+        }
+        $("#ownershipInformation")[0].innerHTML = str;
       });
-    }
-    $("#reviewClassInformation")[0].innerHTML = str;
-    str = "";
-    let multipleForm = getCookie("summaryForm");
-    console.log(multipleForm);
-    let multipleFormList = multipleForm.split("~");
-    str +=
-      "First Country: " +
-      multipleFormList[1].split("(")[1].split(")")[0] +
-      "<br/>";
-    var dateList = [
-      "In the last 6 months",
-      "More than 6 months ago",
-      "Do not know"
-    ];
-    str +=
-      "First date in other country: " +
-      dateList[multipleFormList[2] - 1] +
-      "<br/>";
-    str +=
-      "Want to try and claim priority on this prior filing: " +
-      (multipleFormList[3] == "option1" ? "Yes" : "No") +
-      "<br/>";
-    str +=
-      "Wish to register this trademark in multiple countries: " +
-      (multipleFormList[4] == "option1"
-        ? "Yes"
-        : multipleFormList[4] == "option2"
-        ? "No"
-        : "Maybe Later") +
-      "<br/>";
-    str += "Countries: " + multipleFormList[5].split("`").join(", ") + "<br/>";
-    $("#reviewMultipleCountries")[0].innerHTML = str;
   }
 
   if ($("#exampleTable")[0] != undefined) {
@@ -456,6 +602,31 @@ $(document).ready(function() {
   }
 });
 
+function setOrgForm(num) {
+  if (num == 1) {
+    $("#ownerFirstName").val("");
+    $("#ownerLastName").val("");
+    $("#ownerCitizen").val("US");
+
+    $(".currentIndividual")[0].style.display = "none";
+    return;
+  }
+  const orgList = getCookie("ownerForm")
+    .split("~")
+    [num].split("`");
+  $("#ownerFirstName").val(orgList[0]);
+  $("#ownerLastName").val(orgList[1]);
+  $("#ownerCitizen").val(orgList[2]);
+  let currentStatus = getCookie("currentStatus");
+  setCookie("currentStatus", "2`" + currentStatus.split("`")[1] + "`" + num);
+  currentStatus = getCookie("currentStatus");
+  $(".currentIndividual")[0].style.display = "inherit";
+  $(".currentIndividual")[0].innerHTML =
+    parseInt(currentStatus.split("`")[2] - 1) +
+    "/" +
+    parseInt(currentStatus.split("`")[1] - 1);
+}
+
 function setOrganizationForm() {
   const orgList = getCookie("ownerForm")
     .split("~")[1]
@@ -476,6 +647,17 @@ function setOrganizationForm() {
 
 function setOwnerForm(num) {
   let ownerList = getCookie("ownerForm").split("~");
+  if (num == 0) {
+    $("#indivFirstName").val("");
+    $("#indivLastName").val("");
+    $("#indivCitizenSelect").val("US");
+    $("#indivAddress").val("");
+    $("#indivCity").val("");
+    $("#indivState").val("");
+    $("#indivCountrySelect").val("US");
+    $("#indivZip").val("");
+    $(".currentIndividual")[0].style.display = "none";
+  }
   if (getCookie("ownerForm") == "") {
     return;
   }
@@ -507,6 +689,7 @@ function setOwnerForm(num) {
         (parseInt(num) + 1)
     );
   }
+  $(".currentIndividual")[0].style.display = "inherit";
   $(".currentIndividual")[0].innerHTML =
     parseInt(getCookie("currentStatus").split("`")[2] - 1) +
     "/" +
@@ -532,8 +715,54 @@ function ownerBack() {
   }
 }
 
+function orgBack() {
+  const currentStatus = getCookie("currentStatus").split("`");
+  if (parseInt(currentStatus[2]) <= 2) {
+    self.location = "step4-1.html";
+  } else {
+    setCookie(
+      "currentStatus",
+      currentStatus[0] +
+        "`" +
+        currentStatus[1] +
+        "`" +
+        (parseInt(currentStatus[2]) - 1)
+    );
+    setOrgForm(parseInt(currentStatus[2]) - 1);
+  }
+}
+
 function continueClicked() {
   console.log("123qwerqwer");
+}
+
+function orgFormSubmit() {
+  let orgList = getCookie("ownerForm").split("~");
+  const currentStatus = getCookie("currentStatus").split("`");
+  const orgStr =
+    $("#ownerFirstName").val() +
+    "`" +
+    $("#ownerLastName").val() +
+    "`" +
+    $("#ownerCitizen").val();
+  if (currentStatus[1] == "1") {
+    orgList.push(orgStr);
+    setCookie("currentStatus", "2`2`2");
+  } else {
+    orgList[parseInt(currentStatus[2])] = orgStr;
+  }
+  console.log(orgList);
+  setCookie("ownerForm", orgList.join("~"));
+  if (parseInt(currentStatus[2]) < parseInt(currentStatus[1])) {
+    setCookie(
+      "currentStatus",
+      "2`" + currentStatus[1] + "`" + (parseInt(currentStatus[2]) + 1)
+    );
+    setOrgForm(parseInt(currentStatus[2]) + 1);
+    return false;
+  }
+  document.orgForm.action = "step5.html";
+  return true;
 }
 
 function ownerFormSubmit() {
@@ -567,36 +796,58 @@ function ownerFormSubmit() {
       $("#organizationContactTitle").val() +
       "`" +
       $("#organizationContactPhone").val();
-    setCookie("ownerForm", "~" + orgStr);
-    setCookie("currentStatus", "2`1`1");
+    let currentStatus = getCookie("currentStatus").split("`");
+    if (currentStatus[0] == "1") {
+      setCookie("currentStatus", "2`1`1");
+      setCookie("ownerForm", "");
+      currentStatus = getCookie("currentStatus").split("`");
+    }
+    if (currentStatus[0] == "2" && parseInt(currentStatus[1]) > 1) {
+      setCookie("currentStatus", "2`" + currentStatus[1] + "`2");
+      let ownerList = getCookie("ownerForm").split("~");
+      ownerList[1] = orgStr;
+      setCookie("ownerForm", ownerList.join("~"));
+    } else {
+      setCookie("ownerForm", "~" + orgStr);
+      setCookie("currentStatus", "2`1`1");
+    }
   } else {
     //Individual
-    const currentStatus = getCookie("currentStatus");
+    let currentStatus = getCookie("currentStatus");
+    const indivStr =
+      $("#indivFirstName").val() +
+      "`" +
+      $("#indivLastName").val() +
+      "`" +
+      $("#indivCitizenSelect").val() +
+      "`" +
+      $("#indivAddress").val() +
+      "`" +
+      $("#indivCity").val() +
+      "`" +
+      $("#indivState").val() +
+      "`" +
+      $("#indivCountrySelect").val() +
+      "`" +
+      $("#indivZip").val();
+
+    if (
+      currentStatus == "" ||
+      currentStatus.split("`")[0] == "2" ||
+      currentStatus.split("`")[1] == "0"
+    ) {
+      setCookie("ownerForm", "");
+      setCookie("currentStatus", "1`1`2");
+      currentStatus = getCookie("currentStatus");
+    }
+    const ownerCookie = getCookie("ownerForm");
+    let ownerList = ownerCookie.split("~");
+    ownerList[parseInt(currentStatus.split("`")[2]) - 1] = indivStr;
+    setCookie("ownerForm", ownerList.join("~"));
     if (
       parseInt(currentStatus.split("`")[1]) >=
       parseInt(currentStatus.split("`")[2])
     ) {
-      const indivStr =
-        $("#indivFirstName").val() +
-        "`" +
-        $("#indivLastName").val() +
-        "`" +
-        $("#indivCitizenSelect").val() +
-        "`" +
-        $("#indivAddress").val() +
-        "`" +
-        $("#indivCity").val() +
-        "`" +
-        $("#indivState").val() +
-        "`" +
-        $("#indivCountrySelect").val() +
-        "`" +
-        $("#indivZip").val();
-
-      const ownerCookie = getCookie("ownerForm");
-      let ownerList = ownerCookie.split("~");
-      ownerList[parseInt(currentStatus.split("`")[2]) - 1] = indivStr;
-      setCookie("ownerForm", ownerList.join("~"));
       setOwnerForm(currentStatus.split("`")[2]);
       return false;
     }
@@ -1586,6 +1837,7 @@ $("#companyButton").click(function() {
     var each = form[i];
     each.setAttribute("required", "");
   }
+  $(".currentIndividual")[0].style.display = "none";
 });
 $("#indivButton").click(function() {
   //console.log($("#indivButton")[0].classList);
@@ -1607,7 +1859,60 @@ $("#indivButton").click(function() {
     var each = form[i];
     each.setAttribute("required", "");
   }
+  $(".currentIndividual")[0].style.display = "inherit";
 });
+function addMoreOrgs() {
+  const orgStr =
+    $("#ownerFirstName").val() +
+    "`" +
+    $("#ownerLastName").val() +
+    "`" +
+    $("#ownerCitizen").val();
+  let ownerCookie = getCookie("ownerForm");
+  setCookie("ownerForm", ownerCookie + "~" + orgStr);
+  var statusCookie = getCookie("currentStatus");
+  setCookie(
+    "currentStatus",
+    "2`" +
+      (parseInt(statusCookie.split("`")[1]) + 1) +
+      "`" +
+      (parseInt(statusCookie.split("`")[1]) + 1)
+  );
+  setOrgForm(parseInt(statusCookie.split("`")[1]) + 1);
+}
+function deleteOrg() {
+  let ownerCookie = getCookie("ownerForm").split("~");
+  const currentStatus = getCookie("currentStatus").split("`");
+  ownerCookie.splice(parseInt(currentStatus[2]), 1);
+  let statusStr = "2`" + (parseInt(currentStatus[1]) - 1);
+  if (currentStatus[1] == currentStatus[2]) {
+    statusStr += "`" + (parseInt(currentStatus[2]) - 1);
+  } else {
+    statusStr += "`" + currentStatus[2];
+  }
+  setCookie("currentStatus", statusStr);
+  setCookie("ownerForm", ownerCookie.join("~"));
+  setOrgForm(getCookie("currentStatus").split("`")[2]);
+}
+
+function deleteOwners() {
+  let ownerCookie = getCookie("ownerForm").split("~");
+  const currentStatus = getCookie("currentStatus").split("`");
+  console.log(currentStatus);
+  ownerCookie.splice(parseInt(currentStatus[2]) - 1, 1);
+  console.log(ownerCookie);
+  let statusStr = "1`" + (parseInt(currentStatus[1]) - 1);
+  if (parseInt(currentStatus[1]) < parseInt(currentStatus[2])) {
+    statusStr += "`" + (parseInt(currentStatus[2]) - 1);
+  } else {
+    statusStr += "`" + currentStatus[2];
+  }
+  setCookie("currentStatus", statusStr);
+  setCookie("ownerForm", ownerCookie.join("~"));
+  setOwnerForm(getCookie("currentStatus").split("`")[2] - 1);
+  //ownerCookie.splice(parseInt(currentStatus[2]), 1);
+}
+
 function addMoreOwners() {
   var indivStr =
     $("#indivFirstName").val() +
@@ -1630,9 +1935,16 @@ function addMoreOwners() {
     var each = ownerInputs[i];
     each.value = "";
   }
+
+  var statusCookie = getCookie("currentStatus");
+  if (statusCookie.split("`")[0] == "2") {
+    setCookie("ownerForm", "");
+    setCookie("currentStatus", "");
+    statusCookie = getCookie("currentStatus");
+  }
   var ownerCookie = getCookie("ownerForm");
   setCookie("ownerForm", ownerCookie + "~" + indivStr);
-  var statusCookie = getCookie("currentStatus");
+
   if (statusCookie == "") {
     setCookie("currentStatus", "1`1`1");
   } else {
@@ -1643,8 +1955,9 @@ function addMoreOwners() {
         "`" +
         (parseInt(statusCookie.split("`")[1]) + 2)
     );
-    setOwnerForm(parseInt(statusCookie.split("`")[1]) + 1);
   }
+
+  setOwnerForm(parseInt(getCookie("currentStatus").split("`")[1]));
 }
 
 function onFinish() {
