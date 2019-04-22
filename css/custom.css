@@ -926,3 +926,6 @@ thead input {
   top: 10px;
   font-size: 20px;
 }
+#deleteOwnerBtn {
+  display: none;
+}

@@ -950,7 +950,7 @@
 														<a tabIndex = "" onclick="addMoreOwners()" class = "btn btn-primary"><i class="fa fa-plus"></i> Add More Owners</a>
 													</div>
 													<div class = "ml-auto mr-auto">
-														<a tabIndex = "" onclick="deleteOwners()" class = "btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
+														<a tabIndex = "" id = "deleteOwnerBtn" onclick="deleteOwners()" class = "btn btn-primary"><i class="fa fa-trash"></i> Delete</a>
 													</div>
 												</div>
 											</div>
@@ -1156,6 +1156,9 @@
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.trademarkia.com/js/header_mm.js"></script> 
 		<script type="text/javascript" src="https://www.trademarkia.com/js/general.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
 		<script src="./js/countrySelect.js"></script>
 		<script>
 				/* $("#country_selector").countrySelect({

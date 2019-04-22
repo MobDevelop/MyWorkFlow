@@ -145,17 +145,9 @@ $(document).ready(function() {
     console.log(getCookie("currentStatus"));
     console.log(getCookie("ownerForm"));
     //setCookie("currentStatus", "");
-    fetch(
-      "https://cors-anywhere.herokuapp.com/" +
-        "https://www.trademarkia.com/services/country.ashx",
-      {
-        method: "GET",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
-        }
-      }
-    )
+    fetch("./data/country.json", {
+      method: "GET"
+    })
       .then(function(res) {
         return res.json();
       })
@@ -187,17 +179,9 @@ $(document).ready(function() {
 
   if ($(".additionalForm")[0] != undefined) {
     //step4-2
-    fetch(
-      "https://cors-anywhere.herokuapp.com/" +
-        "https://www.trademarkia.com/services/country.ashx",
-      {
-        method: "GET",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
-        }
-      }
-    )
+    fetch("./data/country.json", {
+      method: "GET"
+    })
       .then(function(res) {
         return res.json();
       })
@@ -228,17 +212,9 @@ $(document).ready(function() {
   if ($(".acQuestionForm")[0] != undefined) {
     //step5
 
-    fetch(
-      "https://cors-anywhere.herokuapp.com/" +
-        "https://www.trademarkia.com/services/country.ashx",
-      {
-        method: "GET",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
-        }
-      }
-    )
+    fetch("./data/country.json", {
+      method: "GET"
+    })
       .then(function(res) {
         return res.json();
       })
@@ -289,17 +265,9 @@ $(document).ready(function() {
 
   if ($("#reviewTrademarkName")[0] != undefined) {
     // step6
-    fetch(
-      "https://cors-anywhere.herokuapp.com/" +
-        "https://www.trademarkia.com/services/country.ashx",
-      {
-        method: "GET",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": true
-        }
-      }
-    )
+    fetch("./data/country.json", {
+      method: "GET"
+    })
       .then(function(res) {
         return res.json();
       })
@@ -649,11 +617,13 @@ function setOwnerForm(num) {
     $("#indivZip").val(currentOwnerList[7]);
   }
   if (num == 1) {
+    $("#deleteOwnerBtn")[0].style.display = "none";
     setCookie(
       "currentStatus",
       currentStatus.split("`")[0] + "`" + currentStatus.split("`")[1] + "`2"
     );
   } else {
+    $("#deleteOwnerBtn")[0].style.display = "inherit";
     setCookie(
       "currentStatus",
       currentStatus.split("`")[0] +
@@ -743,8 +713,8 @@ function ownerFormSubmit() {
   if ($(".companyForm")[0].classList.length == 1) {
     //Organization Button Clicked
     if (
-      $("#entityTypeSelect").val() == 2 ||
-      $("#entityTypeSelect").val() == 3
+      $("#entityTypeSelect").val() != 2 &&
+      $("#entityTypeSelect").val() != 3
     ) {
       document.ownerForm.action = "step4-2.html";
     } else document.ownerForm.action = "step5.html";
@@ -1888,6 +1858,12 @@ function deleteOwners() {
 }
 
 function addMoreOwners() {
+  if ($("form")[0].checkValidity()) {
+    console.log("valid");
+  } else {
+    $("form")[0].reportValidity();
+    return;
+  }
   var indivStr =
     $("#indivFirstName").val() +
     "`" +
