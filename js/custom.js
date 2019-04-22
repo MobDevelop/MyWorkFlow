@@ -1,29 +1,3 @@
-/*$(".menu-tgl").click(function() {
-  $("body").addClass("swipe");
-});
-$(".close-tgl").click(function() {
-  $("body").removeClass("swipe");
-});
-$(document).on("click", function(event) {
-  var $trigger = $("body");
-  if ($trigger !== event.target && !$trigger.has(event.target).length) {
-    $("body").removeClass("swipe");
-  }
-});
-
-$(document).on("click", function(event) {
-  var $trigger = $(".dropMenu ");
-  if ($trigger !== event.target && !$trigger.has(event.target).length) {
-    $(".dropMenu ").removeClass("userOpen");
-    $(".subMenuLink").slideUp();
-  }
-});
-$(document).ready(function() {
-  $(".accordion-toggle").on("click", function() {
-    $(".accordion-toggle").removeClass("active");
-    $(this).addClass("active");
-  });
-});*/
 var image = "";
 var imageRecognized = false;
 var columnCount = 6;
