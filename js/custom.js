@@ -545,6 +545,7 @@ $(document).ready(function() {
 });
 
 function setOrgForm(num) {
+  $("#deleteOrgBtn")[0].style.display = "inherit";
   if (num == 1) {
     $("#ownerFirstName").val("");
     $("#ownerLastName").val("");
@@ -553,6 +554,9 @@ function setOrgForm(num) {
     $(".currentIndividual")[0].style.display = "none";
     return;
   }
+  if (num == 2) {
+    $("#deleteOrgBtn")[0].style.display = "none";
+  }
   const orgList = getCookie("ownerForm")
     .split("~")
     [num].split("`");
@@ -560,6 +564,7 @@ function setOrgForm(num) {
   $("#ownerLastName").val(orgList[1]);
   $("#ownerCitizen").val(orgList[2]);
   let currentStatus = getCookie("currentStatus");
+  console.log(currentStatus);
   setCookie("currentStatus", "2`" + currentStatus.split("`")[1] + "`" + num);
   currentStatus = getCookie("currentStatus");
   $(".currentIndividual")[0].style.display = "inherit";
@@ -1806,6 +1811,12 @@ $("#indivButton").click(function() {
   $(".currentIndividual")[0].style.display = "inherit";
 });
 function addMoreOrgs() {
+  if ($("form")[0].checkValidity()) {
+    console.log("valid");
+  } else {
+    $("form")[0].reportValidity();
+    return;
+  }
   const orgStr =
     $("#ownerFirstName").val() +
     "`" +

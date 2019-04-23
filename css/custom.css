@@ -929,3 +929,6 @@ thead input {
 #deleteOwnerBtn {
   display: none;
 }
+#deleteOrgBtn {
+  display: none;
+}
