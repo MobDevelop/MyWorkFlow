@@ -1229,6 +1229,9 @@ function changeColorInput() {
   }
 }
 function trademarkBlur() {
+  if (getCookie("trademarkName") == $("#trademarkInput").val()) {
+    return;
+  }
   $(".chatInfo").css("display", "none");
   $(".chatText p").text(
     "Let's begin! Please enter your proposed trade mark or select an image. I’ll check for words and phrases that may be difficult to register. Note: a common mistake is being too generic or descriptive."
