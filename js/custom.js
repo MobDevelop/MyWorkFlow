@@ -93,6 +93,7 @@ $(document).ready(function() {
   if ($("#pickListBody")[0] != undefined) {
     // Step 2-2
     console.log(document.cookie);
+    $("#search-input").val(getCookie("search-input"));
     var cookieValue = getCookie("PickLists");
     if (cookieValue != "") {
       var picklistArr = cookieValue.split("~");
@@ -1523,6 +1524,9 @@ function cookieContainsCurrentValue(pickValue) {
 }
 
 function changeSearchInput() {
+  if (getCookie("search-input") == $("#search-input").val()) {
+    return;
+  }
   $("#pickListDiv").css("display", "none");
   if ($("#search-input").val().length != 0) {
     $("#searchInputSpinner").css("display", "inherit");
@@ -1550,6 +1554,7 @@ function changeSearchInput() {
         if ($("#inlineCheckbox2")[0].checked) {
           inlineStatus = inlineStatus + 2;
         }
+        setCookie("search-input", $("#search-input").val());
         list.forEach(function(lEach) {
           if (
             (inlineStatus == 1 && lEach.CID < 35) ||
